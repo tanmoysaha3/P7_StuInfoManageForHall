@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +36,7 @@ public class AdminRegister extends AppCompatActivity {
     Button adminRegB;
     TextView adminLoginText;
     ProgressBar adminRegPBar;
+    ImageView passVisibilityAdminReg;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     FirebaseUser fUser;
@@ -50,9 +54,26 @@ public class AdminRegister extends AppCompatActivity {
         adminRegB=findViewById(R.id.adminRegB);
         adminLoginText=findViewById(R.id.adminLoginText);
         adminRegPBar=findViewById(R.id.adminRegPBar);
+        passVisibilityAdminReg=findViewById(R.id.passVisibilityAdminReg);
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
+
+        passVisibilityAdminReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(passAdminReg.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    passVisibilityAdminReg.setImageResource(R.drawable.ic_baseline_visibility_24_white);
+                    //Show Password
+                    passAdminReg.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    passVisibilityAdminReg.setImageResource(R.drawable.ic_baseline_visibility_off_24_white);
+                    //Hide Password
+                    passAdminReg.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         adminRegB.setOnClickListener(new View.OnClickListener() {
             @Override

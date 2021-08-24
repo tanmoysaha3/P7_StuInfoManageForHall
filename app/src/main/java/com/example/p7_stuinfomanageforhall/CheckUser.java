@@ -134,3 +134,4 @@ public class CheckUser extends AppCompatActivity {
 //Change emails
 //CheckUser     - 2*2 times
 //AdminRegister - 1 time
+//StuRegister   - 1 time
