@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall">
-        <activity android:name=".StuRegister">
-
-        </activity>
+        <activity android:name=".Base"></activity>
+        <activity android:name=".CheckAdminLevel" />
+        <activity android:name=".AdminLogin" />
+        <activity android:name=".StuRegister" />
         <activity android:name=".EmailVerification" />
         <activity android:name=".AdminRegister">
             <intent-filter>
@@ -20,10 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CheckUser">
-
-        </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".CheckUser" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

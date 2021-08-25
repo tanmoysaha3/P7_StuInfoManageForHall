@@ -162,7 +162,7 @@ public class AdminRegister extends AppCompatActivity {
 
     private void showMessage() {
         AlertDialog.Builder warning=new AlertDialog.Builder(this)
-                .setTitle("Verification email is sent")
+                .setTitle("Verification email has been sent")
                 .setMessage("A verification email has been sent to your email address. To complete verification - click on the link included in email &" +
                         " then click on \"Done\".")
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
