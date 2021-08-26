@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboardNavMHA"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/seatManageNavMHA"
+        android:title="Seat Management" >
+        <menu >
+            <item
+                android:id="@+id/createSeatNavMHA"
+                android:title="Create Seat" />
+            <item
+                android:id="@+id/assignSeatNavMHA"
+                android:title="Assign Seat" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/stuManageNavMHA"
+        android:title="Student Management" >
+        <menu >
+            <item
+                android:id="@+id/filterStuNavMHA"
+                android:title="Filter Student List" />
+            <item
+                android:id="@+id/searchStuNavMHA"
+                android:title="Search Student" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/stuffManageNavMHA"
+        android:title="Stuff Management" >
+        <menu >
+            <item
+                android:id="@+id/assignOfficialNavMHA"
+                android:title="Assign Official" />
+            <item
+                android:id="@+id/removeOfficialNavMHA"
+                android:title="Remove Official" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/logoutNavMHA"
+        android:title="Logout" />
+
+</menu>

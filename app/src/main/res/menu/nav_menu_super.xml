@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboardNavMSA"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/hallManageNavMSA"
+        android:title="Hall Management" >
+        <menu >
+            <item
+                android:id="@+id/hallStatNavMSA"
+                android:title="Hall Statistics" />
+            <item
+                android:id="@+id/createHallNavMSA"
+                android:title="Create Hall" />
+            <item
+                android:id="@+id/createFloorNavMSA"
+                android:title="Create Floor" />
+            <item
+                android:id="@+id/createRoomNavMSA"
+                android:title="Create Room" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/stuffManageNavMSA"
+        android:title="Stuff Management" >
+        <menu >
+            <item
+                android:id="@+id/assignHallAdminNavMSA"
+                android:title="Assign Hall Admin" />
+            <item
+                android:id="@+id/removeHallAdminNavMSA"
+                android:title="Remove Hal  Admin" />
+            <item
+                android:id="@+id/assignSuperAdminNavMSA"
+                android:title="Assign Super Admin" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/dataManageNavMSA"
+        android:title="Data Management" >
+        <menu >
+            <item
+                android:id="@+id/uploadWriteStuDataNavMSA"
+                android:title="Upload Student data" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/logoutNavMSA"
+        android:title="Logout" />
+
+</menu>

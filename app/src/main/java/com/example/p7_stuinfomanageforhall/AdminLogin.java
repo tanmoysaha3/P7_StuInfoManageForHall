@@ -103,9 +103,9 @@ public class AdminLogin extends AppCompatActivity {
                         FirebaseUser fUser=fAuth.getCurrentUser();
                         if (fUser.isEmailVerified()){
                             Toast.makeText(AdminLogin.this, "Already verified", Toast.LENGTH_SHORT).show();
-                            /*Intent intent=new Intent(getApplicationContext(),CheckAdminLevel.class);
+                            Intent intent=new Intent(getApplicationContext(),CheckAdminLevel.class);
                             intent.putExtra("Email",email);
-                            startActivity(intent);*/
+                            startActivity(intent);
                         }
                         else {
                             fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {

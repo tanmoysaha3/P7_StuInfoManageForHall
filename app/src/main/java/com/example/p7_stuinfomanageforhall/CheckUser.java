@@ -56,7 +56,7 @@ public class CheckUser extends AppCompatActivity {
                             }
                             //else if(emailDomain.equals("gmail.com")) {
                             else if(emailDomain.equals("yousmail.com")) {
-                                //startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                             }
                         }
                         else {
@@ -65,7 +65,7 @@ public class CheckUser extends AppCompatActivity {
                     }
                     else {
                         //startActivity(new Intent(getApplicationContext(),StuLogin.class));
-                        startActivity(new Intent(getApplicationContext(),AdminRegister.class));
+                        startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                     }
                     finish();
                 }

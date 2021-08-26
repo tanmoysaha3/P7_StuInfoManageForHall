@@ -40,7 +40,8 @@ public class StuRegister extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 
-    String email, pass, tempName, tempAYear, tempDist, tempContactNo, tempDept, tempDOB;
+    String email, pass, tempName, tempAYear, tempDist, tempContactNo,
+            tempDept, tempDOB, tempGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class StuRegister extends AppCompatActivity {
                                 tempDist=stuOfficialSnap.getString("District");
                                 tempContactNo=stuOfficialSnap.getString("ContactNo");
                                 tempDOB=stuOfficialSnap.getString("DateOfBirth");
+                                tempGender=stuOfficialSnap.getString("Gender");
 
                                 fAuth.createUserWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
@@ -147,6 +149,7 @@ public class StuRegister extends AppCompatActivity {
                                         stu.put("IsAssigned","No");
                                         stu.put("AssignedSeat","Empty");
                                         stu.put("NullValue",null);
+                                        stu.put("Gender",tempGender);
                                         stuDoc.set(stu).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
