@@ -38,7 +38,7 @@ public class CheckAdminLevel extends AppCompatActivity {
         String documentId=email.substring(0,email.indexOf("@"));
         Toast.makeText(this, "email"+email, Toast.LENGTH_SHORT).show();
 
-        DocumentReference documentReference=fStore.collection("Verified Admins").document("abc.def");
+        DocumentReference documentReference=fStore.collection("Verified Admins").document(documentId);
 
         /*documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override

@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.paging.PagedList;
@@ -475,9 +474,9 @@ public class UploadWriteStuData extends Base {
 
         public FileViewHolder(@NonNull View itemView) {
             super(itemView);
-            fileName=itemView.findViewById(R.id.fileName);
-            fileStatus=itemView.findViewById(R.id.fileStatus);
-            fileWork=itemView.findViewById(R.id.fileWork);
+            fileName=itemView.findViewById(R.id.fileNameFileList);
+            fileStatus=itemView.findViewById(R.id.fileStatusFileList);
+            fileWork=itemView.findViewById(R.id.fileWorkFileList);
             fileCard=itemView.findViewById(R.id.fileCard);
             view=itemView;
         }

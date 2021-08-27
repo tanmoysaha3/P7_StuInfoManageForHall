@@ -11,16 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall.NoActionBar">
-        <activity android:name=".DashBoardSuperAdmin"></activity>
+        <activity android:name=".Halls"></activity>
+        <activity android:name=".DashBoardSuperAdmin" />
         <activity android:name=".UploadWriteStuData" />
         <activity android:name=".Base" />
         <activity android:name=".CheckAdminLevel" />
         <activity android:name=".AdminLogin" />
         <activity android:name=".StuRegister" />
         <activity android:name=".EmailVerification" />
-        <activity android:name=".AdminRegister">
-
-        </activity>
+        <activity android:name=".AdminRegister"></activity>
         <activity android:name=".CheckUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

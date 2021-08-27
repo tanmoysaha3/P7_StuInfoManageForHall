@@ -74,7 +74,7 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 break;
             case R.id.createHallNavMSA:
-                //startActivity(new Intent(getApplicationContext(),Halls.class));
+                startActivity(new Intent(getApplicationContext(),Halls.class));
                 break;
             case R.id.createFloorNavMSA:
                 //startActivity(new Intent(getApplicationContext(),Floors.class));

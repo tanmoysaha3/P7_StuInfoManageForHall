@@ -2,4 +2,10 @@
     <string name="app_name">P7_StuInfoManageForHall</string>
     <string name="open">open</string>
     <string name="close">close</string>
+
+    <string-array name="hallTypes">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>

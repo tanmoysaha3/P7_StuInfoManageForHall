@@ -1,5 +1,6 @@
 package com.example.p7_stuinfomanageforhall;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -56,11 +62,13 @@ public class CheckUser extends AppCompatActivity {
                             }
                             //else if(emailDomain.equals("gmail.com")) {
                             else if(emailDomain.equals("yousmail.com")) {
-                                startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                FirebaseUser fUser=fAuth.getCurrentUser();
+                                checkAdminLevelM(fUser);
+                                //startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                             }
                         }
                         else {
-                            //startActivity(new Intent(getApplicationContext(),EmailVerification.class));
+                            startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                         }
                     }
                     else {
@@ -75,6 +83,33 @@ public class CheckUser extends AppCompatActivity {
                 }
             }
         },2000);
+    }
+
+    private void checkAdminLevelM(FirebaseUser fUser) {
+        String email=fUser.getEmail();
+        String documentId=email.substring(0,email.indexOf("@"));
+        DocumentReference documentReference=fStore.collection("Verified Admins").document(documentId);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                String x=documentSnapshot.getString("IsAdmin");
+
+                if(x.equals("1")) {
+                    startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
+                }
+                else if(x.equals("0")){
+                    Toast.makeText(CheckUser.this, "You are not admin", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
+                }
+                else if(x.equals("2")){
+                    //startActivity(new Intent(getApplicationContext(), HallAdmin.class));
+                }
+                else if(x.equals("3")){
+                    //startActivity(new Intent(getApplicationContext(), Official.class));
+                }
+                finish();
+            }
+        });
     }
 
     private boolean isOnline(){
@@ -130,6 +165,8 @@ public class CheckUser extends AppCompatActivity {
                 });
         warning.show();
     }
+
+
 }
 //Change emails
 //CheckUser     - 2*2 times
