@@ -3,6 +3,7 @@ package com.example.p7_stuinfomanageforhall.models;
 public class HallModel {
 
     private String HallName;
+    private String HallId;
     private String HallAdmin;
     private String TotalFloorInHall;
     private String TotalRoomInHall;
@@ -14,10 +15,11 @@ public class HallModel {
 
     }
 
-    public HallModel(String hallName, String hallAdmin, String totalFloorInHall,
+    public HallModel(String hallName, String hallId, String hallAdmin, String totalFloorInHall,
                      String totalRoomInHall, String totalSeatInHall, String totalStuInHall,
                      String hallType){
         this.HallName=hallName;
+        this.HallId=hallId;
         this.HallAdmin=hallAdmin;
         this.TotalFloorInHall=totalFloorInHall;
         this.TotalRoomInHall=totalRoomInHall;
@@ -32,6 +34,14 @@ public class HallModel {
 
     public void setHallName(String hallName) {
         HallName = hallName;
+    }
+
+    public String getHallId() {
+        return HallId;
+    }
+
+    public void setHallId(String hallId) {
+        HallId = hallId;
     }
 
     public String getHallAdmin() {

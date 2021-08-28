@@ -64,9 +64,6 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()){
-            case R.id.uploadWriteStuDataNavMSA:
-                startActivity(new Intent(getApplicationContext(),UploadWriteStuData.class));
-                break;
             case R.id.dashboardNavMSA:
                 //startActivity(new Intent(getApplicationContext(),DashBoardSuperAdmin.class));
                 break;
@@ -77,7 +74,7 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(new Intent(getApplicationContext(),Halls.class));
                 break;
             case R.id.createFloorNavMSA:
-                //startActivity(new Intent(getApplicationContext(),Floors.class));
+                startActivity(new Intent(getApplicationContext(),Floors.class));
                 break;
             case R.id.createRoomNavMSA:
                 //startActivity(new Intent(getApplicationContext(),Rooms.class));
@@ -95,6 +92,9 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.dataManageNavMSA:
                 //startActivity(new Intent(getApplicationContext(), Management.class));
+                break;
+            case R.id.uploadWriteStuDataNavMSA:
+                startActivity(new Intent(getApplicationContext(),UploadWriteStuData.class));
                 break;
 
         }

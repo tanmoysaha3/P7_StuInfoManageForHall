@@ -97,11 +97,11 @@ public class Halls extends Base {
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent=new Intent(getApplicationContext(),Floors.class);
+                        Intent intent=new Intent(getApplicationContext(),Floors.class);
                         intent.putExtra("HallId",model.getHallId());
                         intent.putExtra("HallName",model.getHallName());
                         intent.putExtra("TotalFloorInHall",model.getTotalFloorInHall());
-                        startActivity(intent);*/
+                        startActivity(intent);
                     }
                 });
                 holder.view.setOnLongClickListener(new View.OnLongClickListener() {
@@ -159,12 +159,12 @@ public class Halls extends Base {
                     hallNameCreateHall.setError("Can't be empty");
                     return;
                 }
-                if (hallId.length() != 2){
+                if (hallId.length() != 1){
                     hallIdCreateHall.setError("Enter valid value");
                     return;
                 }
 
-                //String hallNameId= hallName + " (" + hallId + ")";
+                String hallNameId= hallName + " (" + hallId + ")";
                 DocumentReference docRef=fStore.collection("Halls").document(hallId);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -176,13 +176,14 @@ public class Halls extends Base {
                             }
                             else {
                                 Map<String,Object> createHall=new HashMap<>();
-                                createHall.put("HallName",hallName);
+                                createHall.put("HallName",hallNameId);
                                 createHall.put("HallId",hallId);
                                 createHall.put("HallAdmin","Empty");
                                 createHall.put("IsHallAdminAssigned","No");
                                 createHall.put("TotalFloorInHall","0");
                                 createHall.put("TotalRoomInHall","0");
                                 createHall.put("TotalSeatInHall","0");
+                                createHall.put("TotalStuInHall","0");
                                 createHall.put("HallType",hallTypeCreateHallS.getSelectedItem().toString());
 
                                 docRef.set(createHall).addOnSuccessListener(new OnSuccessListener<Void>() {
