@@ -5,18 +5,18 @@ public class HallModel {
     private String HallName;
     private String HallId;
     private String HallAdmin;
-    private String TotalFloorInHall;
-    private String TotalRoomInHall;
-    private String TotalSeatInHall;
-    private String TotalStuInHall;
+    private Long TotalFloorInHall;
+    private Long TotalRoomInHall;
+    private Long TotalSeatInHall;
+    private Long TotalStuInHall;
     private String HallType;
 
     public HallModel(){
 
     }
 
-    public HallModel(String hallName, String hallId, String hallAdmin, String totalFloorInHall,
-                     String totalRoomInHall, String totalSeatInHall, String totalStuInHall,
+    public HallModel(String hallName, String hallId, String hallAdmin, Long totalFloorInHall,
+                     Long totalRoomInHall, Long totalSeatInHall, Long totalStuInHall,
                      String hallType){
         this.HallName=hallName;
         this.HallId=hallId;
@@ -52,36 +52,36 @@ public class HallModel {
         HallAdmin = hallAdmin;
     }
 
-    public String getTotalFloorInHall() {
+    public Long getTotalFloorInHall() {
         return TotalFloorInHall;
     }
 
-    public void setTotalFloorInHall(String totalFloorInHall) {
-        TotalFloorInHall = totalFloorInHall;
+    public void setTotalStuInHall(Long totalStuInHall) {
+        TotalStuInHall = totalStuInHall;
     }
 
-    public String getTotalRoomInHall() {
+    public Long getTotalRoomInHall() {
         return TotalRoomInHall;
     }
 
-    public void setTotalRoomInHall(String totalRoomInHall) {
-        TotalRoomInHall = totalRoomInHall;
-    }
-
-    public String getTotalSeatInHall() {
-        return TotalSeatInHall;
-    }
-
-    public void setTotalSeatInHall(String totalSeatInHall) {
+    public void setTotalSeatInHall(Long totalSeatInHall) {
         TotalSeatInHall = totalSeatInHall;
     }
 
-    public String getTotalStuInHall() {
+    public Long getTotalSeatInHall() {
+        return TotalSeatInHall;
+    }
+
+    public void setTotalRoomInHall(Long totalRoomInHall) {
+        TotalRoomInHall = totalRoomInHall;
+    }
+
+    public Long getTotalStuInHall() {
         return TotalStuInHall;
     }
 
-    public void setTotalStuInHall(String totalStuInHall) {
-        TotalStuInHall = totalStuInHall;
+    public void setTotalFloorInHall(Long totalFloorInHall) {
+        TotalFloorInHall = totalFloorInHall;
     }
 
     public String getHallType() {

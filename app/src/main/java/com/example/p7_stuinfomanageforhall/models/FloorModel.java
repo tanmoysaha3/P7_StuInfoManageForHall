@@ -2,15 +2,15 @@ package com.example.p7_stuinfomanageforhall.models;
 
 public class FloorModel {
     private String FloorNo;
-    private String TotalRoomInFloor;
-    private String TotalSeatInFloor;
-    private String TotalStuInFloor;
+    private Long TotalRoomInFloor;
+    private Long TotalSeatInFloor;
+    private Long TotalStuInFloor;
 
     public FloorModel(){
 
     }
 
-    public FloorModel(String floorNo, String totalRoomInFloor, String totalSeatInFloor, String totalStuInFloor){
+    public FloorModel(String floorNo, Long totalRoomInFloor, Long totalSeatInFloor, Long totalStuInFloor){
         this.FloorNo=floorNo;
         this.TotalRoomInFloor=totalRoomInFloor;
         this.TotalSeatInFloor=totalSeatInFloor;
@@ -25,27 +25,27 @@ public class FloorModel {
         FloorNo = floorNo;
     }
 
-    public String getTotalRoomInFloor() {
+    public Long getTotalRoomInFloor() {
         return TotalRoomInFloor;
     }
 
-    public void setTotalRoomInFloor(String totalRoomInFloor) {
-        TotalRoomInFloor = totalRoomInFloor;
+    public void setTotalStuInFloor(Long totalStuInFloor) {
+        TotalStuInFloor = totalStuInFloor;
     }
 
-    public String getTotalSeatInFloor() {
+    public Long getTotalSeatInFloor() {
         return TotalSeatInFloor;
     }
 
-    public void setTotalSeatInFloor(String totalSeatInFloor) {
+    public void setTotalSeatInFloor(Long totalSeatInFloor) {
         TotalSeatInFloor = totalSeatInFloor;
     }
 
-    public String getTotalStuInFloor() {
+    public Long getTotalStuInFloor() {
         return TotalStuInFloor;
     }
 
-    public void setTotalStuInFloor(String totalStuInFloor) {
-        TotalStuInFloor = totalStuInFloor;
+    public void setTotalRoomInFloor(Long totalRoomInFloor) {
+        TotalRoomInFloor = totalRoomInFloor;
     }
 }

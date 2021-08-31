@@ -5,11 +5,9 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/floorCard"
-        android:layout_width="match_parent"
+        android:id="@+id/roomCard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +18,9 @@
             android:layout_height="match_parent">
 
             <View
-                android:id="@+id/view12"
+                android:id="@+id/view8"
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,11 +28,11 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/floorNoFloorList"
-                android:layout_width="100dp"
+                android:id="@+id/roomNoRoomList"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
-                android:hint="Floor No"
-                android:paddingStart="8dp"
+                android:paddingStart="12dp"
+                android:text="TextView"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,42 +42,18 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <View
-                android:id="@+id/view9"
+                android:id="@+id/view15"
                 android:layout_width="1dp"
                 android:layout_height="0dp"
                 android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/view13"
-                app:layout_constraintEnd_toStartOf="@+id/totalRoomsFloorList"
-                app:layout_constraintStart_toEndOf="@+id/floorNoFloorList"
-                app:layout_constraintTop_toTopOf="@+id/view12" />
+                app:layout_constraintBottom_toBottomOf="@+id/view14"
+                app:layout_constraintEnd_toStartOf="@+id/totalSeatsRoomList"
+                app:layout_constraintStart_toEndOf="@+id/roomNoRoomList"
+                app:layout_constraintTop_toTopOf="@id/view8" />
 
             <TextView
-                android:id="@+id/totalRoomsFloorList"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:hint="Rooms"
-                android:paddingStart="8dp"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/floorNoFloorList"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <View
-                android:id="@+id/view10"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/view13"
-                app:layout_constraintEnd_toStartOf="@+id/totalSeatsFloorList"
-                app:layout_constraintStart_toEndOf="@+id/totalRoomsFloorList"
-                app:layout_constraintTop_toTopOf="@+id/view12" />
-
-            <TextView
-                android:id="@+id/totalSeatsFloorList"
-                android:layout_width="100dp"
+                android:id="@+id/totalSeatsRoomList"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="TextView"
@@ -88,23 +61,23 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/totalRoomsFloorList"
+                app:layout_constraintStart_toEndOf="@+id/roomNoRoomList"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
             <View
-                android:id="@+id/view11"
+                android:id="@+id/view16"
                 android:layout_width="1dp"
                 android:layout_height="0dp"
                 android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/view13"
-                app:layout_constraintEnd_toStartOf="@+id/totalStuFolorList"
-                app:layout_constraintStart_toEndOf="@+id/totalSeatsFloorList"
-                app:layout_constraintTop_toTopOf="@+id/view12" />
+                app:layout_constraintBottom_toBottomOf="@+id/view14"
+                app:layout_constraintEnd_toStartOf="@+id/totalStuRoomList"
+                app:layout_constraintStart_toEndOf="@+id/totalSeatsRoomList"
+                app:layout_constraintTop_toTopOf="@id/view8" />
 
             <TextView
-                android:id="@+id/totalStuFolorList"
-                android:layout_width="100dp"
+                android:id="@+id/totalStuRoomList"
+                android:layout_width="137dp"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="TextView"
@@ -112,20 +85,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/totalSeatsFloorList"
+                app:layout_constraintStart_toEndOf="@+id/totalSeatsRoomList"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
             <View
-                android:id="@+id/view13"
+                android:id="@+id/view14"
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/totalRoomsFloorList"
+                app:layout_constraintTop_toBottomOf="@+id/roomNoRoomList"
                 app:layout_constraintVertical_bias="0.0" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

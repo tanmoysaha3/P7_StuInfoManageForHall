@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -57,9 +59,9 @@ public class Floors extends Base {
     FirestorePagingAdapter<FloorModel,FloorViewHolder> floorAdapter;
     String floorNo;
 
-    String hallId, hallName, selectedHall, hallIdNewFloor;
+    String hallIdIntent, hallNameIntent, selectedHall, hallIdNewFloor;
 
-    String totalFloor;
+    Long totalFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +86,8 @@ public class Floors extends Base {
                 else {
                     Intent data=getIntent();
                     String tempHallId=data.getStringExtra("HallId");
-                    hallId= Optional.ofNullable(tempHallId).orElse("1");
-                    hallName=data.getStringExtra("HallName");
+                    hallIdIntent= Optional.ofNullable(tempHallId).orElse("1");
+                    hallNameIntent=data.getStringExtra("HallName");
 
                     floorsRecV=findViewById(R.id.floorsRecV);
                     hallNameFloorsS=findViewById(R.id.hallNameFloorsS);
@@ -112,11 +114,11 @@ public class Floors extends Base {
                                     halls.add(hall);
                                 }
                                 hallAdapter.notifyDataSetChanged();
-                                if (hallName!=null){
-                                    hallNameFloorsS.setSelection(hallAdapter.getPosition(hallName));
+                                if (hallNameIntent!=null){
+                                    hallNameFloorsS.setSelection(hallAdapter.getPosition(hallNameIntent));
                                 }
                                 else {
-                                    hallName=hallNameFloorsS.getItemAtPosition(0).toString();
+                                    hallNameIntent=hallNameFloorsS.getItemAtPosition(0).toString();
                                 }
                             }
                             else {
@@ -130,9 +132,9 @@ public class Floors extends Base {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             selectedHall=parent.getItemAtPosition(position).toString();
                             hallIdNewFloor=selectedHall.substring(Math.max(0, selectedHall.length() - 2),Math.max(0, selectedHall.length() - 1));
-                            if (!hallName.equals(selectedHall)){
-                                hallId=hallIdNewFloor;
-                                floorRecVRefresh(hallId);
+                            if (!hallNameIntent.equals(selectedHall)){
+                                //hallIdIntent=hallIdNewFloor;
+                                floorRecVRefresh(hallIdNewFloor);
                             }
                         }
 
@@ -142,7 +144,7 @@ public class Floors extends Base {
                         }
                     });
 
-                    floorRecVRefresh(hallId);
+                    floorRecVRefresh(hallIdIntent);
                 }
             }
         });
@@ -164,7 +166,6 @@ public class Floors extends Base {
         ArrayAdapter<String> hallAdapter=new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item,halls);
         hallAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallNameCreateFloorS.setAdapter(hallAdapter);
-        //hallNameFloorsS.setSelection(halls.indexOf(hallName));
 
         hallsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -175,6 +176,10 @@ public class Floors extends Base {
                         halls.add(hall);
                     }
                     hallAdapter.notifyDataSetChanged();
+                    hallNameCreateFloorS.setSelection(hallNameFloorsS.getSelectedItemPosition());
+                }
+                else {
+                    Toast.makeText(Floors.this, "Failed with"+task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -188,8 +193,8 @@ public class Floors extends Base {
                 documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        totalFloor=value.getString("TotalFloorInHall");
-                        currentTFloorsCreateFloor.setText(totalFloor);
+                        totalFloor=value.getLong("TotalFloorInHall");
+                        currentTFloorsCreateFloor.setText(totalFloor.toString());
                     }
                 });
             }
@@ -209,16 +214,16 @@ public class Floors extends Base {
                     return;
                 }
 
-                Integer totalFloorInt=Integer.parseInt(totalFloor);
+                //Integer totalFloorInt=Integer.parseInt(totalFloor);
                 for(int i=1; i<=Integer.parseInt(newFloors);i++) {
-                    String x = String.valueOf(i+totalFloorInt);
+                    String x = String.valueOf(i+totalFloor);
                     DocumentReference documentReference = fStore.collection("Halls").document(hallIdNewFloor)
                             .collection("Floors").document(x);
                     Map<String,Object> user = new HashMap<>();
                     user.put("FloorNo", x);
-                    user.put("TotalRoomInFloor","0");
-                    user.put("TotalSeatInFloor","0");
-                    user.put("TotalStuInFloor","0");
+                    user.put("TotalRoomInFloor",0);
+                    user.put("TotalSeatInFloor",0);
+                    user.put("TotalStuInFloor",0);
 
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -230,17 +235,16 @@ public class Floors extends Base {
                 }
 
                 DocumentReference documentReference = fStore.collection("Halls").document(hallIdNewFloor);
-                Map<String, Object> updatedValue=new HashMap<>();
-                updatedValue.put("TotalFloorInHall",String.valueOf(totalFloorInt+Integer.parseInt(newFloors)));
-                documentReference.update(updatedValue).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(Floors.this, "Total floor updated", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                documentReference.update("TotalFloorInHall", FieldValue.increment(Integer.parseInt(newFloors)));
+
+                Intent intent=new Intent(getApplicationContext(),Floors.class);
+                intent.putExtra("HallName",hallNameCreateFloorS.getSelectedItem().toString());
+                intent.putExtra("HallId",hallIdNewFloor);
+
+                dialog.dismiss();
                 finish();
                 overridePendingTransition(0, 0);
-                startActivity(getIntent());
+                startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });
@@ -273,8 +277,16 @@ public class Floors extends Base {
         floorAdapter=new FirestorePagingAdapter<FloorModel, FloorViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull FloorViewHolder holder, int position, @NonNull FloorModel model) {
+                if (position%2!=0){
+                    holder.floorCard.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.listGray));
+                }
+                /*else {
+                    holder.floorCard.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.yellow));
+                }*/
                 holder.floorNoFloorList.setText(model.getFloorNo());
-                holder.totalRoomFloorList.setText(model.getTotalRoomInFloor());
+                holder.totalRoomFloorList.setText(model.getTotalRoomInFloor().toString());
+                holder.totalSeatsFloorList.setText(model.getTotalSeatInFloor().toString());
+                holder.totalStuFloorList.setText(model.getTotalStuInFloor().toString());
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -301,13 +313,15 @@ public class Floors extends Base {
     }
 
     private class FloorViewHolder extends RecyclerView.ViewHolder {
-        TextView floorNoFloorList, totalRoomFloorList;
+        TextView floorNoFloorList, totalRoomFloorList, totalSeatsFloorList, totalStuFloorList;
         CardView floorCard;
         View view;
         public FloorViewHolder(@NonNull View itemView) {
             super(itemView);
             floorNoFloorList=itemView.findViewById(R.id.floorNoFloorList);
             totalRoomFloorList=itemView.findViewById(R.id.totalRoomsFloorList);
+            totalSeatsFloorList=itemView.findViewById(R.id.totalSeatsFloorList);
+            totalStuFloorList=itemView.findViewById(R.id.totalStuFolorList);
             floorCard=itemView.findViewById(R.id.floorCard);
             view=itemView;
         }

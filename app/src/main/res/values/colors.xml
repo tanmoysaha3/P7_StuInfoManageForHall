@@ -41,4 +41,5 @@
     <color name="darkThemeWhiteHigh">#DEFFFFFF</color>
     <color name="darkThemeWhiteMedium">#99FFFFFF</color>
     <color name="darkThemeWhiteDisabled">#61FFFFFF</color>
+    <color name="listGray">#CCCCCC</color>
 </resources>

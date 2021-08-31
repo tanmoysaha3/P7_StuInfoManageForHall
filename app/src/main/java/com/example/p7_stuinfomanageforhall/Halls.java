@@ -100,7 +100,6 @@ public class Halls extends Base {
                         Intent intent=new Intent(getApplicationContext(),Floors.class);
                         intent.putExtra("HallId",model.getHallId());
                         intent.putExtra("HallName",model.getHallName());
-                        intent.putExtra("TotalFloorInHall",model.getTotalFloorInHall());
                         startActivity(intent);
                     }
                 });
@@ -110,10 +109,10 @@ public class Halls extends Base {
                         String name=model.getHallName();
                         String type=model.getHallType();
                         String admin=model.getHallAdmin();
-                        String totalFloor=model.getTotalFloorInHall();
-                        String totalRoom=model.getTotalRoomInHall();
-                        String totalSeat=model.getTotalSeatInHall();
-                        String totalStu=model.getTotalStuInHall();
+                        Long totalFloor=model.getTotalFloorInHall();
+                        Long totalRoom=model.getTotalRoomInHall();
+                        Long totalSeat=model.getTotalSeatInHall();
+                        Long totalStu=model.getTotalStuInHall();
                         Toast.makeText(Halls.this, "Long Click", Toast.LENGTH_SHORT).show();
                         return true;
                     }
@@ -180,10 +179,10 @@ public class Halls extends Base {
                                 createHall.put("HallId",hallId);
                                 createHall.put("HallAdmin","Empty");
                                 createHall.put("IsHallAdminAssigned","No");
-                                createHall.put("TotalFloorInHall","0");
-                                createHall.put("TotalRoomInHall","0");
-                                createHall.put("TotalSeatInHall","0");
-                                createHall.put("TotalStuInHall","0");
+                                createHall.put("TotalFloorInHall",0);
+                                createHall.put("TotalRoomInHall",0);
+                                createHall.put("TotalSeatInHall",0);
+                                createHall.put("TotalStuInHall",0);
                                 createHall.put("HallType",hallTypeCreateHallS.getSelectedItem().toString());
 
                                 docRef.set(createHall).addOnSuccessListener(new OnSuccessListener<Void>() {
