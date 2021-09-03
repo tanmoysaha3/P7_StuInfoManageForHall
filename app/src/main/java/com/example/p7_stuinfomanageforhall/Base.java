@@ -80,6 +80,7 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
                 startActivity(new Intent(getApplicationContext(),Rooms.class));
                 break;
             case R.id.assignHallAdminNavMSA:
+                //startActivity(new Intent(getApplicationContext(),HallAdminAssign.class));
                 break;
             case R.id.removeHallAdminNavMSA:
                 break;

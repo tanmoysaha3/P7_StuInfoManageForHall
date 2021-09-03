@@ -5,6 +5,7 @@ public class HallModel {
     private String HallName;
     private String HallId;
     private String HallAdmin;
+    private String HallAdminId;
     private Long TotalFloorInHall;
     private Long TotalRoomInHall;
     private Long TotalSeatInHall;
@@ -15,7 +16,7 @@ public class HallModel {
 
     }
 
-    public HallModel(String hallName, String hallId, String hallAdmin, Long totalFloorInHall,
+    public HallModel(String hallName, String hallId, String hallAdmin, String hallAdminId, Long totalFloorInHall,
                      Long totalRoomInHall, Long totalSeatInHall, Long totalStuInHall,
                      String hallType){
         this.HallName=hallName;
@@ -26,6 +27,7 @@ public class HallModel {
         this.TotalSeatInHall=totalSeatInHall;
         this.TotalStuInHall=totalStuInHall;
         this.HallType=hallType;
+        this.HallAdminId=hallAdminId;
     }
 
     public String getHallName() {
@@ -50,6 +52,14 @@ public class HallModel {
 
     public void setHallAdmin(String hallAdmin) {
         HallAdmin = hallAdmin;
+    }
+
+    public String getHallAdminId() {
+        return HallAdminId;
+    }
+
+    public void setHallAdminId(String hallAdminId) {
+        HallAdminId = hallAdminId;
     }
 
     public Long getTotalFloorInHall() {

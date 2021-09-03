@@ -61,8 +61,7 @@ public class CheckAdminLevel extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 x=documentSnapshot.getString("IsAdmin");
-                Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(CheckAdminLevel.this, "x="+x, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
                 if(x.equals("1")) {
                     startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
                 }
@@ -72,7 +71,7 @@ public class CheckAdminLevel extends AppCompatActivity {
                     //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
                 }
                 else if(x.equals("2")){
-                    //startActivity(new Intent(getApplicationContext(), HallAdmin.class));
+                    startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
                 }
                 else if(x.equals("3")){
                     //startActivity(new Intent(getApplicationContext(), Official.class));
