@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall.NoActionBar">
+        <activity android:name=".Seats"></activity>
         <activity android:name=".DashBoardHallAdmin" />
         <activity android:name=".Rooms" />
         <activity android:name=".Floors" />

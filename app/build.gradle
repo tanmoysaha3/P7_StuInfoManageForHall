@@ -45,4 +45,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
 
     implementation 'com.loopj.android:android-async-http:1.4.4'
+
+    //to save hallAdmin hallId
+    implementation 'com.aliassadi:power-preference-lib:2.0.0'
 }

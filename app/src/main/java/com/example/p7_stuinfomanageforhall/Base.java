@@ -79,17 +79,20 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.createRoomNavMSA:
                 startActivity(new Intent(getApplicationContext(),Rooms.class));
                 break;
-            case R.id.assignHallAdminNavMSA:
-                //startActivity(new Intent(getApplicationContext(),HallAdminAssign.class));
-                break;
-            case R.id.removeHallAdminNavMSA:
-                break;
             case R.id.assignSuperAdminNavMSA:
                 break;
             case R.id.logoutNavMSA:
+                fAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), AdminLogin.class));
+                finish();
+                break;
+            case R.id.logoutNavMHA:
+                fAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), AdminLogin.class));
+                finish();
                 break;
             case R.id.createSeatNavMHA:
-                //startActivity(new Intent(getApplicationContext(),Seats.class));
+                startActivity(new Intent(getApplicationContext(),Seats.class));
                 break;
             case R.id.dataManageNavMSA:
                 //startActivity(new Intent(getApplicationContext(), Management.class));

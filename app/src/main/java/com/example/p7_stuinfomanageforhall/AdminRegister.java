@@ -114,6 +114,7 @@ public class AdminRegister extends AppCompatActivity {
                         admin.put("Name",name);
                         admin.put("Email",email);
                         admin.put("IsAdmin","0");
+                        admin.put("AssignedHallId","0");
                         adminRef.set(admin).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

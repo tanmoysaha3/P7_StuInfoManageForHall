@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.preference.PowerPreference;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -37,6 +38,8 @@ public class CheckUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_user);
+
+        PowerPreference.init(this);
 
         checkUserPBar=findViewById(R.id.checkUserPBar);
         fAuth=FirebaseAuth.getInstance();
@@ -62,9 +65,9 @@ public class CheckUser extends AppCompatActivity {
                             }
                             //else if(emailDomain.equals("gmail.com")) {
                             else if(emailDomain.equals("yousmail.com")) {
-                                FirebaseUser fUser=fAuth.getCurrentUser();
-                                checkAdminLevelM(fUser);
-                                //startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                //FirebaseUser fUser=fAuth.getCurrentUser();
+                                //checkAdminLevelM(fUser);
+                                startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                             }
                         }
                         else {
@@ -85,7 +88,7 @@ public class CheckUser extends AppCompatActivity {
         },2000);
     }
 
-    private void checkAdminLevelM(FirebaseUser fUser) {
+    /*private void checkAdminLevelM(FirebaseUser fUser) {
         String email=fUser.getEmail();
         String documentId=email.substring(0,email.indexOf("@"));
         DocumentReference documentReference=fStore.collection("Verified Admins").document(documentId);
@@ -93,6 +96,8 @@ public class CheckUser extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 String x=documentSnapshot.getString("IsAdmin");
+                String y=documentSnapshot.getString("AssignedHallId");
+                PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
 
                 if(x.equals("1")) {
                     startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
@@ -102,7 +107,8 @@ public class CheckUser extends AppCompatActivity {
                     //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
                 }
                 else if(x.equals("2")){
-                    //startActivity(new Intent(getApplicationContext(), HallAdmin.class));
+                    Toast.makeText(CheckUser.this, "Logging in", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
                 }
                 else if(x.equals("3")){
                     //startActivity(new Intent(getApplicationContext(), Official.class));
@@ -110,7 +116,7 @@ public class CheckUser extends AppCompatActivity {
                 finish();
             }
         });
-    }
+    }*/
 
     private boolean isOnline(){
         try {

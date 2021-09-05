@@ -13,13 +13,13 @@
                 android:title="Hall Statistics" />
             <item
                 android:id="@+id/createHallNavMSA"
-                android:title="Create Hall" />
+                android:title="Halls" />
             <item
                 android:id="@+id/createFloorNavMSA"
-                android:title="Create Floor" />
+                android:title="Floors" />
             <item
                 android:id="@+id/createRoomNavMSA"
-                android:title="Create Room" />
+                android:title="Rooms" />
         </menu>
     </item>
     <item

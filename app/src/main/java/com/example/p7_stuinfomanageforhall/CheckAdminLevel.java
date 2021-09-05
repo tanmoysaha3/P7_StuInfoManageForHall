@@ -18,6 +18,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Source;
+import com.preference.PowerPreference;
 
 public class CheckAdminLevel extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class CheckAdminLevel extends AppCompatActivity {
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
+
+        PowerPreference.init(this);
 
         fUser = fAuth.getCurrentUser();
         String email=fUser.getEmail();
@@ -61,6 +64,8 @@ public class CheckAdminLevel extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 x=documentSnapshot.getString("IsAdmin");
+                String y=documentSnapshot.getString("AssignedHallId");
+                PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
                 //Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
                 if(x.equals("1")) {
                     startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
