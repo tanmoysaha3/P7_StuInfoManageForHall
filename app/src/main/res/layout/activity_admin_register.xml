@@ -57,7 +57,7 @@
         android:background="@color/black"
         android:ems="10"
         android:hint="Name"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textCapWords"
         android:padding="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#70FFFFFF"

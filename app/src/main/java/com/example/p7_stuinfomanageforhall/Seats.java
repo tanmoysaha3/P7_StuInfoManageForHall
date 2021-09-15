@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +59,7 @@ public class Seats extends Base {
     FirestorePagingAdapter<SeatModel,SeatViewHolder> seatAdapter;
     String seatNo;
 
-    String floorNoIntent, roomNoIntent, adminAssignedHallId;
+    String floorNoIntent, roomNoIntent, adminAssignedHallId, adminAssignedHallType;
 
     String floorNoNewSeat, roomNoNewSeat;
     Long currentSeat;
@@ -77,6 +78,7 @@ public class Seats extends Base {
         navView.inflateMenu(R.menu.nav_menu_hall);
 
         adminAssignedHallId = PowerPreference.getDefaultFile().getString("AdminAssignedHallId");
+        adminAssignedHallType=PowerPreference.getDefaultFile().getString("AdminAssignedHallType");
 
         Query lastDocQuery=fStore.collection("Halls").document(adminAssignedHallId).collection("Floors")
                 .document("1").collection("Rooms").limit(1);
@@ -216,6 +218,9 @@ public class Seats extends Base {
         seatAdapter=new FirestorePagingAdapter<SeatModel, SeatViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull SeatViewHolder holder, int position, @NonNull SeatModel model) {
+                if (position%2!=0){
+                    holder.seatCard.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.listGray));
+                }
                 holder.seatNoSeatList.setText(model.getSeatNo());
                 holder.stuIdSeatList.setText(model.getAssignedStuId());
                 holder.stuNameSeatList.setText(model.getAssignedStuName());
@@ -369,6 +374,7 @@ public class Seats extends Base {
                     uniqueSeat.put("UniqueSeatId",uniqueSeatId);
                     uniqueSeat.put("IsAssigned","0");
                     uniqueSeat.put("AssignedStuId","0");
+                    uniqueSeat.put("SeatType",adminAssignedHallType);
                     uniqueSeatRef.set(uniqueSeat).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

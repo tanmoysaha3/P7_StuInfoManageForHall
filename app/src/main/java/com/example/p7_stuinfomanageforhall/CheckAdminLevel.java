@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,6 +24,8 @@ import com.google.firebase.firestore.Source;
 import com.preference.PowerPreference;
 
 public class CheckAdminLevel extends AppCompatActivity {
+
+    private static final String TAG = "TAG";
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -42,46 +47,43 @@ public class CheckAdminLevel extends AppCompatActivity {
         Toast.makeText(this, "email"+email, Toast.LENGTH_SHORT).show();
 
         DocumentReference documentReference=fStore.collection("Verified Admins").document(documentId);
-
-        /*documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Toast.makeText(CheckAdminLevel.this, "Listen failed."+e, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot=task.getResult();
+                    if (documentSnapshot.exists()){
+                        Toast.makeText(CheckAdminLevel.this, "Exists", Toast.LENGTH_SHORT).show();
+                        x=documentSnapshot.getString("IsAdmin");
+                        String y=documentSnapshot.getString("AssignedHallId");
+                        PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
+                        String z=documentSnapshot.getString("AssignedHallType");
+                        PowerPreference.getDefaultFile().putString("AdminAssignedHallType",z);
+                        //Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
+                        if(x.equals("1")) {
+                            startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
+                        }
+                        else if(x.equals("0")){
+                            Toast.makeText(CheckAdminLevel.this, "You are not admin", Toast.LENGTH_SHORT).show();
 
-                if (snapshot != null && snapshot.exists()) {
-                    Toast.makeText(CheckAdminLevel.this, "Current data: " + snapshot.getData(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(CheckAdminLevel.this, "Current data: null", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
+                        }
+                        else if(x.equals("2")){
+                            startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
+                        }
+                        else if(x.equals("3")){
+                            //startActivity(new Intent(getApplicationContext(), Official.class));
+                        }
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(CheckAdminLevel.this, "Not exists", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(),AdminLogin.class));
+                    }
                 }
-            }
-        });*/
-        //docRef.addSnapshotListener don't need "this" before new EventListener
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                x=documentSnapshot.getString("IsAdmin");
-                String y=documentSnapshot.getString("AssignedHallId");
-                PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
-                //Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
-                if(x.equals("1")) {
-                    startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
+                else {
+                    Toast.makeText(CheckAdminLevel.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
-                else if(x.equals("0")){
-                    Toast.makeText(CheckAdminLevel.this, "You are not admin", Toast.LENGTH_SHORT).show();
-
-                    //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
-                }
-                else if(x.equals("2")){
-                    startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
-                }
-                else if(x.equals("3")){
-                    //startActivity(new Intent(getApplicationContext(), Official.class));
-                }
-                finish();
             }
         });
     }

@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall.NoActionBar">
-        <activity android:name=".Seats"></activity>
+        <activity android:name=".StuLogin"></activity>
+        <activity android:name=".DashBoardStudent" />
+        <activity android:name=".FilterStuList" />
+        <activity android:name=".SeatAssign" />
+        <activity android:name=".Seats" />
         <activity android:name=".DashBoardHallAdmin" />
         <activity android:name=".Rooms" />
         <activity android:name=".Floors" />
@@ -21,7 +25,9 @@
         <activity android:name=".Base" />
         <activity android:name=".CheckAdminLevel" />
         <activity android:name=".AdminLogin" />
-        <activity android:name=".StuRegister" />
+        <activity android:name=".StuRegister">
+
+        </activity>
         <activity android:name=".EmailVerification" />
         <activity android:name=".AdminRegister" />
         <activity android:name=".CheckUser">

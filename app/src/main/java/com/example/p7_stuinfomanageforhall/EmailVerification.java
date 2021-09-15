@@ -62,11 +62,11 @@ public class EmailVerification extends AppCompatActivity {
                                         Toast.makeText(EmailVerification.this, "Document exists", Toast.LENGTH_SHORT).show();
                                     }
                                     else {
-                                        moveFirestoreDocument(fStore.collection("Unverfied Students").document(studentId),
+                                        moveFirestoreDocument(fStore.collection("Unverified Students").document(studentId),
                                                 fStore.collection("Verified Students").document(studentId));
                                         Toast.makeText(EmailVerification.this, "Document moved", Toast.LENGTH_SHORT).show();
                                     }
-                                    //startActivity(new Intent(getApplicationContext(), StuProfile.class));
+                                    startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
                                     finish();
                                 }
                                 else {
@@ -94,7 +94,7 @@ public class EmailVerification extends AppCompatActivity {
                                                 fStore.collection("Verified Admins").document(documentId));
                                         Toast.makeText(EmailVerification.this, "Document Moved", Toast.LENGTH_SHORT).show();
                                     }
-                                    //startActivity(new Intent(getApplicationContext(),AdminProfile.class));
+                                    startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                                     finish();
                                 }
                                 else {

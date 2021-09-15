@@ -139,7 +139,8 @@ public class Halls extends Base {
                                 String adminIdAssign=model.getHallAdminId();
                                 String adminNameAssign=model.getHallAdmin();
                                 String hallIdAssign=model.getHallId();
-                                assignHallAdminDialog(hallIdAssign, hallNameAssign, adminIdAssign, adminNameAssign);
+                                String hallTypeAssign=model.getHallType();
+                                assignHallAdminDialog(hallIdAssign, hallNameAssign, adminIdAssign, adminNameAssign,hallTypeAssign);
                                 return false;
                             }
                         });
@@ -191,7 +192,7 @@ public class Halls extends Base {
         hallsRecV.setAdapter(hallAdapter);
     }
 
-    private void assignHallAdminDialog(String hallIdAssign, String hallNameAssign, String adminIdAssign, String adminNameAssign) {
+    private void assignHallAdminDialog(String hallIdAssign, String hallNameAssign, String adminIdAssign, String adminNameAssign, String hallTypeAssign) {
         Dialog dialog=new Dialog(Halls.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -256,6 +257,7 @@ public class Halls extends Base {
                 Map<String,Object> updateNewAdmin=new HashMap<>();
                 updateNewAdmin.put("IsAdmin","2");
                 updateNewAdmin.put("AssignedHallId",hallIdAssign);
+                updateNewAdmin.put("AssignedHallType",hallTypeAssign);
                 assignedAdminRef.update(updateNewAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -352,6 +354,7 @@ public class Halls extends Base {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(Halls.this, "Hall created", Toast.LENGTH_SHORT).show();
+                                        startActivity(getIntent());
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override

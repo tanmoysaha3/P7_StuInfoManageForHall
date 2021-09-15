@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.preference.PowerPreference;
 
 public class Base extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -53,6 +54,8 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
+        PowerPreference.init(this);
+
         /*View headerView=navView.getHeaderView(0);
         TextView userName=headerView.findViewById(R.id.userNameNavHeader);
         TextView userEmail=headerView.findViewById(R.id.userEmailNavHeader);
@@ -82,13 +85,9 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.assignSuperAdminNavMSA:
                 break;
             case R.id.logoutNavMSA:
-                fAuth.signOut();
-                startActivity(new Intent(getApplicationContext(), AdminLogin.class));
-                finish();
-                break;
             case R.id.logoutNavMHA:
                 fAuth.signOut();
-                startActivity(new Intent(getApplicationContext(), AdminLogin.class));
+                startActivity(new Intent(getApplication(), AdminLogin.class));
                 finish();
                 break;
             case R.id.createSeatNavMHA:
@@ -100,7 +99,12 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.uploadWriteStuDataNavMSA:
                 startActivity(new Intent(getApplicationContext(),UploadWriteStuData.class));
                 break;
-
+            case R.id.assignSeatNavMHA:
+                startActivity(new Intent(getApplicationContext(),SeatAssign.class));
+                break;
+            case R.id.filterStuNavMHA:
+                startActivity(new Intent(getApplicationContext(),FilterStuList.class));
+                break;
         }
         return false;
     }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminLogin extends AppCompatActivity {
+
+    private static final String TAG = "TAG";
 
     private static final int WAIT_TIME = 3 * 60 * 1000;
     private int loginAttempts = 3;
@@ -58,7 +61,7 @@ public class AdminLogin extends AppCompatActivity {
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
-
+        
         passVisibilityAdminLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +102,9 @@ public class AdminLogin extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        Log.d(TAG,"Successfully logged in");
                         Toast.makeText(AdminLogin.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                        FirebaseUser fUser=fAuth.getCurrentUser();
+                        fUser=fAuth.getCurrentUser();
                         if (fUser.isEmailVerified()){
                             Toast.makeText(AdminLogin.this, "Already verified", Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(getApplicationContext(),CheckAdminLevel.class);

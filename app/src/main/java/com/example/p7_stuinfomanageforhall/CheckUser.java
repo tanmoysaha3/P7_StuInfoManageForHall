@@ -1,5 +1,6 @@
 package com.example.p7_stuinfomanageforhall;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,6 +31,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 public class CheckUser extends AppCompatActivity {
+
+    private static final String TAG = "TAG";
 
     ProgressBar checkUserPBar;
     FirebaseAuth fAuth;
@@ -67,15 +71,22 @@ public class CheckUser extends AppCompatActivity {
                             else if(emailDomain.equals("yousmail.com")) {
                                 //FirebaseUser fUser=fAuth.getCurrentUser();
                                 //checkAdminLevelM(fUser);
+                                Log.d(TAG,"CheckUser-CheckAdminLevel User verified");
+                                Toast.makeText(CheckUser.this, "CheckUser-CheckAdminLevel User verified", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                finish();
                             }
                         }
                         else {
+                            Log.d(TAG,"CheckUser-AdminLogin User notVerified");
+                            Toast.makeText(CheckUser.this, "CheckUser-AdminLogin User notVerified", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                         }
                     }
                     else {
                         //startActivity(new Intent(getApplicationContext(),StuLogin.class));
+                        Log.d(TAG,"CheckUser-AdminLogin User null");
+                        Toast.makeText(CheckUser.this, "CheckUser-AdminLogin User null", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                     }
                     finish();
@@ -87,36 +98,6 @@ public class CheckUser extends AppCompatActivity {
             }
         },2000);
     }
-
-    /*private void checkAdminLevelM(FirebaseUser fUser) {
-        String email=fUser.getEmail();
-        String documentId=email.substring(0,email.indexOf("@"));
-        DocumentReference documentReference=fStore.collection("Verified Admins").document(documentId);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                String x=documentSnapshot.getString("IsAdmin");
-                String y=documentSnapshot.getString("AssignedHallId");
-                PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
-
-                if(x.equals("1")) {
-                    startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
-                }
-                else if(x.equals("0")){
-                    Toast.makeText(CheckUser.this, "You are not admin", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
-                }
-                else if(x.equals("2")){
-                    Toast.makeText(CheckUser.this, "Logging in", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
-                }
-                else if(x.equals("3")){
-                    //startActivity(new Intent(getApplicationContext(), Official.class));
-                }
-                finish();
-            }
-        });
-    }*/
 
     private boolean isOnline(){
         try {

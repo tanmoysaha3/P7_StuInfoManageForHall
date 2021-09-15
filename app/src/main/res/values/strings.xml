@@ -8,4 +8,103 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="assignStatus">
+        <item>All</item>
+        <item>Assigned</item>
+        <item>Waiting</item>
+    </string-array>
+
+    <string-array name="districts">
+        <item>All</item>
+        <item>Barguna</item>
+        <item>Barisal</item>
+        <item>Bhola</item>
+        <item>Jhalokati</item>
+        <item>Patuakhali</item>
+        <item>Pirojpur</item>
+        <item>Bandarban</item>
+        <item>Brahmanbaria</item>
+        <item>Chandpur</item>
+        <item>Chittagong</item>
+        <item>Comilla</item>
+        <item>Cox\'s Bazar</item>
+        <item>Feni</item>
+        <item>Khagrachhari</item>
+        <item>Lakshmipur</item>
+        <item>Noakhali</item>
+        <item>Rangamati</item>
+        <item>Dhaka</item>
+        <item>Faridpur</item>
+        <item>Gazipur</item>
+        <item>Gopalganj</item>
+        <item>Kishoreganj</item>
+        <item>Madaripur</item>
+        <item>Manikganj</item>
+        <item>Munshiganj</item>
+        <item>Narayanganj</item>
+        <item>Narsingdi</item>
+        <item>Rajbari</item>
+        <item>Shariatpur</item>
+        <item>Tangail</item>
+        <item>Bagerhat</item>
+        <item>Chuadanga</item>
+        <item>Jessore</item>
+        <item>Jhenaidah</item>
+        <item>Khulna</item>
+        <item>Kushtia</item>
+        <item>Magura</item>
+        <item>Meherpur</item>
+        <item>Narail</item>
+        <item>Satkhira</item>
+        <item>Jamalpur</item>
+        <item>Mymensingh</item>
+        <item>Netrokona</item>
+        <item>Sherpur</item>
+        <item>Bogra</item>
+        <item>Joypurhat</item>
+        <item>Naogaon</item>
+        <item>Natore</item>
+        <item>Chapainawabganj</item>
+        <item>Pabna</item>
+        <item>Rajshahi</item>
+        <item>Sirajganj</item>
+        <item>Dinajpur</item>
+        <item>Gaibandha</item>
+        <item>Kurigram</item>
+        <item>Lalmonirhat</item>
+        <item>Nilphamari</item>
+        <item>Panchagarh</item>
+        <item>Rangpur</item>
+        <item>Thakurgaon</item>
+        <item>Habiganj</item>
+        <item>Moulvibazar</item>
+        <item>Sunamganj</item>
+        <item>Sylhet</item>
+    </string-array>
+
+    <string-array name="departments">
+        <item>All</item>
+        <item>CSE</item>
+        <item>EEE</item>
+        <item>Math</item>
+        <item>Che</item>
+    </string-array>
+
+    <string-array name="academicYear">
+        <item>All</item>
+        <item>2009-10</item>
+        <item>2010-11</item>
+        <item>2011-12</item>
+        <item>2012-13</item>
+        <item>2013-14</item>
+        <item>2014-15</item>
+        <item>2015-16</item>
+        <item>2016-17</item>
+        <item>2017-18</item>
+        <item>2018-19</item>
+        <item>2019-20</item>
+        <item>2020-21</item>
+        <item>2021-22</item>
+    </string-array>
+
 </resources>
