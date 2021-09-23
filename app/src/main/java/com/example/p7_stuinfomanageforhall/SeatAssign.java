@@ -371,6 +371,8 @@ public class SeatAssign extends Base {
                 Toast.makeText(SeatAssign.this, "Error in updating uniqueSeat", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private void removeAlert() {

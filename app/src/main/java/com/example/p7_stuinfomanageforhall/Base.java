@@ -82,6 +82,9 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.createRoomNavMSA:
                 startActivity(new Intent(getApplicationContext(),Rooms.class));
                 break;
+            case R.id.colorFilterNavMSA:
+                startActivity(new Intent(getApplicationContext(),ColorFilter.class));
+                break;
             case R.id.assignSuperAdminNavMSA:
                 break;
             case R.id.logoutNavMSA:

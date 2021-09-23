@@ -347,8 +347,10 @@ public class Seats extends Base {
                     DocumentReference seatRef=fStore.collection("Halls").document(adminAssignedHallId)
                             .collection("Floors").document(floorNoNewSeat).collection("Rooms")
                             .document(roomNoNewSeat).collection("Seats").document(x);
+                    String uniqueSeatId=adminAssignedHallId+floorNoNewSeat+roomNoNewSeat+x;
                     Map<String,Object> seatNew=new HashMap<>();
                     seatNew.put("SeatNo",x);
+                    seatNew.put("UniqueSeatId",uniqueSeatId);
                     seatNew.put("IsAssigned","0");
                     seatNew.put("AssignedStuId","0");
                     seatNew.put("AssignedStuName","Empty");
@@ -364,7 +366,7 @@ public class Seats extends Base {
                         }
                     });
 
-                    String uniqueSeatId=adminAssignedHallId+floorNoNewSeat+roomNoNewSeat+x;
+                    /*String uniqueSeatId=adminAssignedHallId+floorNoNewSeat+roomNoNewSeat+x;
                     DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
                     Map<String,Object> uniqueSeat=new HashMap<>();
                     uniqueSeat.put("HallId",adminAssignedHallId);
@@ -385,7 +387,7 @@ public class Seats extends Base {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(Seats.this, "Failed to create unique seat", Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    });*/
                 }
                 DocumentReference roomRef=fStore.collection("Halls").document(adminAssignedHallId)
                         .collection("Floors").document(floorNoNewSeat).collection("Rooms")
