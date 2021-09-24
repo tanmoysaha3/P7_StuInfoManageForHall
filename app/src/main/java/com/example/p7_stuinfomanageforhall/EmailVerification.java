@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,8 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.preference.PowerPreference;
 
 public class EmailVerification extends AppCompatActivity {
+
+    private static final String TAG = "Log - EmailVerification";
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -42,12 +44,16 @@ public class EmailVerification extends AppCompatActivity {
         fStore=FirebaseFirestore.getInstance();
         //fUser=fAuth.getCurrentUser();
 
+        PowerPreference.init(this);
+
         fAuth.signInWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 fUser=fAuth.getCurrentUser();
                 String emailDomain=email.substring(email.indexOf("@")+1);
                 if (fUser.isEmailVerified()){
+                    Log.d(TAG,"Email is verified");
+                    PowerPreference.getDefaultFile().putString("IsEmailVerified","1");
                     Toast.makeText(EmailVerification.this, "Verification completed", Toast.LENGTH_SHORT).show();
                     //if(emailDomain.equals("student.just.edu.bd")) {
                     if(emailDomain.equals("storegmail.com")) {
@@ -59,25 +65,24 @@ public class EmailVerification extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot stuSnap=task.getResult();
                                     if (stuSnap!=null && stuSnap.exists()){
-                                        Toast.makeText(EmailVerification.this, "Document exists", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG,"Student verification process already completed");
                                     }
                                     else {
                                         moveFirestoreDocument(fStore.collection("Unverified Students").document(studentId),
                                                 fStore.collection("Verified Students").document(studentId));
-                                        Toast.makeText(EmailVerification.this, "Document moved", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "Now student verification process completed");
                                     }
                                     startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
                                     finish();
                                 }
                                 else {
-                                    Toast.makeText(EmailVerification.this, "Document check failed", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG,"Student document check failed");
                                 }
                             }
                         });
 
                     }
                     //else if(emailDomain.equals("just.edu.bd"))
-                    //else if(emailDomain.equals("gmail.com")) {
                     else if(emailDomain.equals("yousmail.com")) {
                         String documentId=email.substring(0,email.indexOf("@"));
                         DocumentReference adminRef=fStore.collection("Verified Admins").document(documentId);
@@ -87,31 +92,32 @@ public class EmailVerification extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot adminSnap=task.getResult();
                                     if (adminSnap!=null && adminSnap.exists()){
-                                        Toast.makeText(EmailVerification.this, "Document exists", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG,"Admin verification process already completed");
                                     }
                                     else {
                                         moveFirestoreDocument (fStore.collection("Unverified Admins").document(documentId),
                                                 fStore.collection("Verified Admins").document(documentId));
-                                        Toast.makeText(EmailVerification.this, "Document Moved", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "Now admin verification process completed");
                                     }
                                     startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                                     finish();
                                 }
                                 else {
-                                    Toast.makeText(EmailVerification.this, "Document check failed", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG,"Admin document check failed");
                                 }
                             }
                         });
                     }
                 }
                 else{
-                    Toast.makeText(EmailVerification.this, "Still verification isn't completed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG,"Still verification isn't completed");
                     showMessage();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.d(TAG,"Error when sign in"+e.getMessage());
                 Toast.makeText(EmailVerification.this, "Error when sign in.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -139,23 +145,6 @@ public class EmailVerification extends AppCompatActivity {
                         //startActivity(new Intent(getApplicationContext(),StuLogin.class));
                         finish();
                     }
-                }).setNeutralButton("Resend", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        fUser=fAuth.getCurrentUser();
-                        fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(EmailVerification.this, "Verification email has been sent", Toast.LENGTH_SHORT).show();
-                                showMessage();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(EmailVerification.this, "Error in ", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
                 });
         warning.show();
     }
@@ -171,18 +160,18 @@ public class EmailVerification extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(EmailVerification.this, "New document written", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG,"New document written");
                                         fromPath.delete()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(EmailVerification.this, "Old document deleted", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG,"Old document deleted");
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(EmailVerification.this, "Error in deleting old document", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG,"Error in deleting old document");
                                                     }
                                                 });
                                     }
@@ -190,16 +179,16 @@ public class EmailVerification extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(EmailVerification.this, "Error in creating new document", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG,"Error in creating new document");
                                     }
                                 });
                     }
                     else {
-                        Toast.makeText(EmailVerification.this, "Document don't exists", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG,"Document don't exists");
                     }
                 }
                 else {
-                    Toast.makeText(EmailVerification.this, "Task failed", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG,"Task failed"+task.getException());
                 }
             }
         });

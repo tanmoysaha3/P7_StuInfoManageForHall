@@ -106,7 +106,11 @@ public class StuLogin extends AppCompatActivity {
                         fUser=fAuth.getCurrentUser();
                         if (fUser.isEmailVerified()){
                             Log.d(TAG,"User verified - starting dashboard activity");
-                            startActivity(new Intent(getApplicationContext(),DashBoardStudent.class));
+                            fAuth.signOut();
+                            Intent intent=new Intent(getApplicationContext(),EmailVerification.class);
+                            intent.putExtra("Email",email);
+                            intent.putExtra("Pass",pass);
+                            startActivity(intent);
                             finish();
                         }
                         else {
@@ -190,6 +194,14 @@ public class StuLogin extends AppCompatActivity {
                     }
                 });
                 passwordResetDialog.create().show();
+            }
+        });
+
+        adminLoginTextB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AdminLogin.class));
+                finish();
             }
         });
     }

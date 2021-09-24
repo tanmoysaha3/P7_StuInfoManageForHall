@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall.NoActionBar">
-        <activity android:name=".ColorFilter"></activity>
+        <activity android:name=".Notices"></activity>
+        <activity android:name=".ColorFilter" />
         <activity android:name=".StuLogin" />
         <activity android:name=".DashBoardStudent" />
         <activity android:name=".FilterStuList" />
@@ -26,7 +27,7 @@
         <activity android:name=".Base" />
         <activity android:name=".CheckAdminLevel" />
         <activity android:name=".AdminLogin" />
-        <activity android:name=".StuRegister"></activity>
+        <activity android:name=".StuRegister" />
         <activity android:name=".EmailVerification" />
         <activity android:name=".AdminRegister" />
         <activity android:name=".CheckUser">

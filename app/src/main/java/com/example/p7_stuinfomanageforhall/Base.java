@@ -90,6 +90,7 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.logoutNavMSA:
             case R.id.logoutNavMHA:
                 fAuth.signOut();
+                PowerPreference.getDefaultFile().clearAsync();
                 startActivity(new Intent(getApplication(), AdminLogin.class));
                 finish();
                 break;

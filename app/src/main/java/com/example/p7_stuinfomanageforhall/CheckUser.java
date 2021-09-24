@@ -54,19 +54,30 @@ public class CheckUser extends AppCompatActivity {
                 if (isOnline()){
                     if (fAuth.getCurrentUser()!=null){
                         if (fAuth.getCurrentUser().isEmailVerified()){
-                            String email=fAuth.getCurrentUser().getEmail();
-                            String emailDomain=email.substring(email.indexOf("@")+1);
-                            //if(emailDomain.equals("student.just.edu.bd")){
-                            if(emailDomain.equals("storegmail.com")){
-                                Log.d(TAG,"online & student verified");
-                                startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
+                            if (PowerPreference.getDefaultFile().getString("IsEmailVerified","0").equals("1")){
+                                Toast.makeText(CheckUser.this, "Dashboard", Toast.LENGTH_SHORT).show();
+                                String email=fAuth.getCurrentUser().getEmail();
+                                String emailDomain=email.substring(email.indexOf("@")+1);
+                                //if(emailDomain.equals("student.just.edu.bd")){
+                                if(emailDomain.equals("storegmail.com")){
+                                    Log.d(TAG,"online & student verified");
+                                    startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
+                                    finish();
+                                }
+                                //else if(emailDomain.equals("just.edu.bd")) {
+                                else if(emailDomain.equals("yousmail.com")) {
+                                    Log.d(TAG,"online & admin verified");
+                                    startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                    finish();
+                                }
                             }
-                            //else if(emailDomain.equals("just.edu.bd")) {
-                            else if(emailDomain.equals("yousmail.com")) {
-                                Log.d(TAG,"online & admin verified");
-                                startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
-                                finish();
+                            else {
+                                Toast.makeText(CheckUser.this, "EmailVerification", Toast.LENGTH_SHORT).show();
+                                fAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(),StuLogin.class));
                             }
+                            finish();
+
                         }
                         else {
                             Log.d(TAG,"user not Verified");
