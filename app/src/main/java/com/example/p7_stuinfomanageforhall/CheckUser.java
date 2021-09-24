@@ -1,7 +1,5 @@
 package com.example.p7_stuinfomanageforhall;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,12 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.preference.PowerPreference;
 
 import java.io.IOException;
@@ -32,7 +25,7 @@ import java.net.SocketAddress;
 
 public class CheckUser extends AppCompatActivity {
 
-    private static final String TAG = "TAG";
+    private static final String TAG = "Log - CheckUser";
 
     ProgressBar checkUserPBar;
     FirebaseAuth fAuth;
@@ -65,35 +58,32 @@ public class CheckUser extends AppCompatActivity {
                             String emailDomain=email.substring(email.indexOf("@")+1);
                             //if(emailDomain.equals("student.just.edu.bd")){
                             if(emailDomain.equals("storegmail.com")){
-                                //startActivity(new Intent(getApplicationContext(), StuProfile.class));
+                                Log.d(TAG,"online & student verified");
+                                startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
                             }
-                            //else if(emailDomain.equals("gmail.com")) {
+                            //else if(emailDomain.equals("just.edu.bd")) {
                             else if(emailDomain.equals("yousmail.com")) {
-                                //FirebaseUser fUser=fAuth.getCurrentUser();
-                                //checkAdminLevelM(fUser);
-                                Log.d(TAG,"CheckUser-CheckAdminLevel User verified");
-                                Toast.makeText(CheckUser.this, "CheckUser-CheckAdminLevel User verified", Toast.LENGTH_SHORT).show();
+                                Log.d(TAG,"online & admin verified");
                                 startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
                                 finish();
                             }
                         }
                         else {
-                            Log.d(TAG,"CheckUser-AdminLogin User notVerified");
-                            Toast.makeText(CheckUser.this, "CheckUser-AdminLogin User notVerified", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),AdminLogin.class));
+                            Log.d(TAG,"user not Verified");
+                            startActivity(new Intent(getApplicationContext(),StuLogin.class));
+                            //startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                         }
                     }
                     else {
-                        //startActivity(new Intent(getApplicationContext(),StuLogin.class));
-                        Log.d(TAG,"CheckUser-AdminLogin User null");
-                        Toast.makeText(CheckUser.this, "CheckUser-AdminLogin User null", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(),AdminLogin.class));
+                        Log.d(TAG,"User is null");
+                        startActivity(new Intent(getApplicationContext(),StuLogin.class));
+                        //startActivity(new Intent(getApplicationContext(),AdminLogin.class));
                     }
                     finish();
                 }
                 else {
+                    Log.d(TAG,"User is offline");
                     offlineAlert();
-                    Toast.makeText(CheckUser.this, "Offline", Toast.LENGTH_SHORT).show();
                 }
             }
         },2000);
@@ -131,12 +121,13 @@ public class CheckUser extends AppCompatActivity {
                                 String email=fAuth.getCurrentUser().getEmail();
                                 String emailDomain=email.substring(email.indexOf("@")+1);
                                 //if(emailDomain.equals("student.just.edu.bd")){
+                                Log.d(TAG, "browsing offline");
                                 if(emailDomain.equals("storegmail.com")){
-                                    //startActivity(new Intent(getApplicationContext(), StuProfile.class));
+                                    startActivity(new Intent(getApplicationContext(), DashBoardStudent.class));
                                 }
                                 //else if(emailDomain.equals("gmail.com")) {
                                 else if(emailDomain.equals("yousmail.com")) {
-                                    //startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
+                                    startActivity(new Intent(getApplicationContext(), CheckAdminLevel.class));
                                 }
                             }
                             else {

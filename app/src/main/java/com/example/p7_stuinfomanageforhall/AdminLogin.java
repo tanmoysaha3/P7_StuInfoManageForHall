@@ -87,7 +87,7 @@ public class AdminLogin extends AppCompatActivity {
                 }
 
                 email=emailAdminLogin.getText().toString().trim();
-                pass=passAdminLogin.getText().toString().trim();
+                pass=passAdminLogin.getText().toString();
 
                 if (email.isEmpty()){
                     emailAdminLogin.setError("Email is required");

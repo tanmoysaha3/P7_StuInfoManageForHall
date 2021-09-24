@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StuRegister extends AppCompatActivity {
+
+    private static final String TAG = "Log - StuRegister";
 
     EditText nameStuReg, emailStuReg, passStuReg;
     Button stuRegB;
@@ -89,7 +92,6 @@ public class StuRegister extends AppCompatActivity {
                 pass=passStuReg.getText().toString().trim();
 
                 //String regex = "^[0-9]{6}.[a-z]{3}@student.just.edu.bd$";
-                //String regex = "\\S+@gmail.com$";
                 String regex = "^[0-9]{6}.[a-z]{3}@storegmail.com$";
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(email);
@@ -98,17 +100,14 @@ public class StuRegister extends AppCompatActivity {
                     nameStuReg.setError("Name is required");
                     return;
                 }
-
                 if (email.isEmpty()){
                     emailStuReg.setError("Email is required");
                     return;
                 }
-
                 if (!matcher.matches()){
                     emailStuReg.setError("University email is required");
                     return;
                 }
-
                 if (pass.length()<8){
                     passStuReg.setError("Password length need to be at least 8");
                     return;
@@ -120,7 +119,7 @@ public class StuRegister extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email,pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(StuRegister.this, "Account created", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG,"Successfully created account");
                         DocumentReference stuOfficialDoc=fStore.collection("Students Data").document(studentId);
                         stuOfficialDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -128,11 +127,11 @@ public class StuRegister extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot stuOfficialSnap=task.getResult();
                                     if (stuOfficialSnap!=null && stuOfficialSnap.exists()){
-                                        Toast.makeText(StuRegister.this, "Exists", Toast.LENGTH_SHORT).show();
-                                        tempName=stuOfficialSnap.getString("Name");
+                                        Log.d(TAG,"Student Id exists in official data");
                                         /*To write all data from official to new
                                         Map<String,Object> stuOfficialMap=new HashMap<>();
                                         stuOfficialMap=stuOfficialSnap.getData();*/
+                                        tempName=stuOfficialSnap.getString("Name");
                                         tempAYear=stuOfficialSnap.getString("AcademicYear");
                                         tempDept=stuOfficialSnap.getString("Department");
                                         tempDist=stuOfficialSnap.getString("District");
@@ -150,36 +149,37 @@ public class StuRegister extends AppCompatActivity {
                                         stu.put("Department",tempDept);
                                         stu.put("DateOfBirth",tempDOB);
                                         stu.put("ContactNo",tempContactNo);
+                                        stu.put("Gender",tempGender);
                                         stu.put("RegTime", FieldValue.serverTimestamp());
-                                        //stu.put("IsAssigned","No");
                                         stu.put("IsAssigned","0");
-                                        //stu.put("AssignedSeat","Empty");
                                         stu.put("UniqueSeatId","Empty");
                                         stu.put("NullValue","Null");
-                                        stu.put("Gender",tempGender);
+                                        //stu.put("IsAssigned","No");
+                                        //stu.put("AssignedSeat","Empty");
                                         stuDoc.set(stu).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toast.makeText(StuRegister.this, "Student Profile Created", Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "Student profile created");
                                                 Map<String,Object> info=new HashMap<>();
                                                 info.put("Registered","Yes");
                                                 info.put("RegTime",FieldValue.serverTimestamp());
                                                 stuOfficialDoc.update(info).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(StuRegister.this, "Official Info Updated", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG,"Official info updated");
                                                         fUser=fAuth.getCurrentUser();
                                                         fUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
-                                                                Toast.makeText(StuRegister.this, "Verification email has been sent", Toast.LENGTH_SHORT).show();
+                                                                Log.d(TAG, "Verification email has been sent");
                                                                 stuRegPBar.setVisibility(View.INVISIBLE);
                                                                 showMessage();
                                                             }
                                                         }).addOnFailureListener(new OnFailureListener() {
                                                             @Override
                                                             public void onFailure(@NonNull Exception e) {
-                                                                Toast.makeText(StuRegister.this, "Error in sending verification email", Toast.LENGTH_SHORT).show();
+                                                                Log.d(TAG,"Error in sending verification email");
+                                                                Toast.makeText(StuRegister.this, "Error in sending verification email"+e.getMessage(), Toast.LENGTH_SHORT).show();
                                                                 stuRegPBar.setVisibility(View.INVISIBLE);
                                                             }
                                                         });
@@ -187,7 +187,7 @@ public class StuRegister extends AppCompatActivity {
                                                 }).addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(StuRegister.this, "Error in info updating"+e, Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG, "Error in official info updating"+e.getMessage());
                                                         stuRegPBar.setVisibility(View.GONE);
                                                     }
                                                 });
@@ -195,18 +195,19 @@ public class StuRegister extends AppCompatActivity {
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(StuRegister.this, "Error"+e, Toast.LENGTH_SHORT).show();
+                                                Log.d(TAG, "Error in creating student profile"+e.getMessage());
                                                 stuRegPBar.setVisibility(View.GONE);
                                             }
                                         });
                                     }
                                     else {
-                                        Toast.makeText(StuRegister.this, "Don't exists", Toast.LENGTH_SHORT).show();
+                                        Log.d(TAG, "Student Id don't exists in official database");
+                                        databaseErrorText.setVisibility(View.VISIBLE);
                                         stuRegPBar.setVisibility(View.INVISIBLE);
                                     }
                                 }
                                 else {
-                                    Toast.makeText(StuRegister.this, "Failed with "+task.getException(), Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "Accessing official database failed with "+task.getException());
                                     stuRegPBar.setVisibility(View.INVISIBLE);
                                 }
                             }
@@ -215,9 +216,19 @@ public class StuRegister extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Registration process failed with "+e.getMessage());
                         Toast.makeText(StuRegister.this, "Failed with "+e, Toast.LENGTH_SHORT).show();
+                        stuRegPBar.setVisibility(View.INVISIBLE);
                     }
                 });
+            }
+        });
+
+        stuLoginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),StuLogin.class));
+                finish();
             }
         });
     }
@@ -240,10 +251,11 @@ public class StuRegister extends AppCompatActivity {
                 }).setNegativeButton("Later!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG,"User logged out");
                         fAuth.signOut();
                         finish();
                     }
-                }).setNeutralButton("Resend", new DialogInterface.OnClickListener() {
+                })/*.setNeutralButton("Resend", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //fUser=fAuth.getCurrentUser();
@@ -262,7 +274,7 @@ public class StuRegister extends AppCompatActivity {
                             }
                         });
                     }
-                });
+                })*/;
         warning.show();
     }
 }
