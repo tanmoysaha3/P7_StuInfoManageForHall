@@ -21,5 +21,7 @@ public class DashBoardSuperAdmin extends Base {
 
         navView.getMenu().clear();
         navView.inflateMenu(R.menu.nav_menu_super);
+
+        createNewB.setVisibility(View.INVISIBLE);
     }
 }

@@ -5,111 +5,91 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/textView86"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Hall Name:"
-        android:textSize="18sp"
+        android:text="New Name"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/hallNameAssignHallAdmin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView45"
+        android:id="@+id/textView87"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Current Admin:"
+        android:layout_marginTop="32dp"
+        android:text="Enter:"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView32"
+        app:layout_constraintTop_toBottomOf="@+id/textView86"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/currAdminAssignHallAdmin"
+    <EditText
+        android:id="@+id/hallNameEditHallName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:text="TextView"
-        android:textSize="18sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Enter New Name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/hallNameAssignHallAdmin"
+        app:layout_constraintStart_toEndOf="@+id/textView87"
+        app:layout_constraintTop_toBottomOf="@+id/textView86"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView47"
+        android:id="@+id/textView88"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Assign New:"
+        android:layout_marginTop="20dp"
+        android:text="Re-Enter:"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView45"
+        app:layout_constraintTop_toBottomOf="@+id/textView87"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Spinner
-        android:id="@+id/selectNewAssignHallAdminS"
+    <EditText
+        android:id="@+id/reHallNameEditHallName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Re-enter New Name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/currAdminAssignHallAdmin"
+        app:layout_constraintStart_toEndOf="@+id/textView88"
+        app:layout_constraintTop_toBottomOf="@+id/hallNameEditHallName"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/assignHallAdminB"
+        android:id="@+id/editHallNameB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="#43A047"
-        android:text="Assign"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView47"
+        app:layout_constraintTop_toBottomOf="@+id/reHallNameEditHallName"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="136dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

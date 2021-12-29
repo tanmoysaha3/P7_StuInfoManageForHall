@@ -46,6 +46,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,8 +108,11 @@ public class Halls extends Base {
                 //String hallNameType=new StringBuilder(model.getHallName()).append(" (").append(model.getHallType()).append(")").toString();
                 //changed as android studio suggestion
                 String hallNameType= model.getHallName() + " (" + model.getHallType() + ")";
+                Long emptySeat=model.getTotalSeatInHall()-model.getTotalStuInHall();
                 holder.hallNameHallList.setText(hallNameType);
                 holder.hallAdminHallList.setText(model.getHallAdmin());
+                holder.seatsHallList.setText(model.getTotalSeatInHall().toString()+" ("+model.getTotalStuInHall().toString()+"+"+
+                        emptySeat.toString()+")");
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -128,6 +132,8 @@ public class Halls extends Base {
                         popupMenu.getMenu().add("Edit Hall Name").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
+                                String hallIdEditName=model.getHallId();
+                                editHallNameDialog(hallIdEditName);
                                 return true;
                             }
                         });
@@ -173,7 +179,9 @@ public class Halls extends Base {
                         Long totalRoom=model.getTotalRoomInHall();
                         Long totalSeat=model.getTotalSeatInHall();
                         Long totalStu=model.getTotalStuInHall();
-                        Toast.makeText(Halls.this, "Long Click", Toast.LENGTH_SHORT).show();
+                        List<String> subAdmins=model.getHallSubAdmins();
+                        hallDetailsDialog(name,type,admin,totalFloor,totalRoom,totalSeat,totalStu,subAdmins);
+                        Toast.makeText(Halls.this, "Long Click"+subAdmins.toString(), Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
@@ -190,6 +198,115 @@ public class Halls extends Base {
         hallsRecV.setHasFixedSize(true);
         hallsRecV.setLayoutManager(new LinearLayoutManager(this));
         hallsRecV.setAdapter(hallAdapter);
+    }
+
+    private void hallDetailsDialog(String name, String type, String admin, Long totalFloor, Long totalRoom, Long totalSeat, Long totalStu, List<String> subAdmins) {
+        Dialog dialog=new Dialog(Halls.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_hall_details);
+
+        TextView hallNameHallDetails=dialog.findViewById(R.id.hallNameHallDetails);
+        TextView hallAdminHallDetails=dialog.findViewById(R.id.hallAdminHallDetails);
+        RecyclerView subAdminsRecVHallDetails=dialog.findViewById(R.id.subAdminsRecVHallDetails);
+        TextView totalFloorsHallDetails=dialog.findViewById(R.id.totalFloorsHallDetails);
+        TextView totalRoomsHallDetails=dialog.findViewById(R.id.totalRoomHallDetails);
+        TextView totalSeatsHallDetails=dialog.findViewById(R.id.totalSeatsHallDetails);
+        TextView totalStuHallDetails=dialog.findViewById(R.id.totalStuHallDetails);
+
+        hallNameHallDetails.setText(name + " ("+ type+")");
+        hallAdminHallDetails.setText(admin);
+        totalFloorsHallDetails.setText(totalFloor.toString());
+        totalRoomsHallDetails.setText(totalRoom.toString());
+        totalSeatsHallDetails.setText(totalSeat.toString());
+        totalStuHallDetails.setText(totalStu.toString());
+
+        RecyclerView.Adapter adapter;
+
+        adapter = new PlanetAdapter((ArrayList<String>) subAdmins,getApplicationContext());
+        subAdminsRecVHallDetails.setHasFixedSize(true);
+        subAdminsRecVHallDetails.setLayoutManager(new LinearLayoutManager(this));
+        subAdminsRecVHallDetails.setAdapter(adapter);
+        dialog.show();
+    }
+
+    class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder> {
+
+        ArrayList<String> planetList;
+        public PlanetAdapter(ArrayList<String> planetList, Context context) {
+            this.planetList = planetList;
+        }
+
+        @Override
+        public PlanetAdapter.PlanetViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sub_admin,parent,false);
+            PlanetViewHolder viewHolder=new PlanetViewHolder(v);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(PlanetAdapter.PlanetViewHolder holder, int position) {
+            holder.text.setText(planetList.get(position).toString());
+        }
+
+        @Override
+        public int getItemCount() {
+            return planetList.size();
+        }
+
+        class PlanetViewHolder extends RecyclerView.ViewHolder{
+            protected TextView text;
+            public PlanetViewHolder(View itemView) {
+                super(itemView);
+                text= (TextView) itemView.findViewById(R.id.subAdminsHallList);
+            }
+        }
+    }
+
+    private void editHallNameDialog(String hallIdEditName) {
+        Dialog dialog=new Dialog(Halls.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_edit_hall_name);
+
+        EditText hallNameEditHallName=dialog.findViewById(R.id.hallNameEditHallName);
+        EditText reHallNameEditHallName=dialog.findViewById(R.id.reHallNameEditHallName);
+        Button editHallNameB=dialog.findViewById(R.id.editHallNameB);
+
+        editHallNameB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name=hallNameEditHallName.getText().toString();
+                String reName=reHallNameEditHallName.getText().toString();
+
+                if (name.equals(reName)){
+                    String hallIdName=name + " (" + hallIdEditName + ")";
+                    DocumentReference hallDoc=fStore.collection("Halls").document(hallIdEditName);
+                    Map<String,Object> updateHall=new HashMap<>();
+                    updateHall.put("HallName",hallIdName);
+                    hallDoc.update(updateHall).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(Halls.this, "Updated hall name", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Halls.this, "Error in updating hall name", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dialog.dismiss();
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+                else {
+                    reHallNameEditHallName.setError("Don't match");
+                }
+            }
+        });
+        dialog.show();
     }
 
     private void assignHallAdminDialog(String hallIdAssign, String hallNameAssign, String adminIdAssign, String adminNameAssign, String hallTypeAssign) {
@@ -256,7 +373,7 @@ public class Halls extends Base {
                 DocumentReference assignedAdminRef=fStore.collection("Verified Admins").document(assignedAdminId);
                 Map<String,Object> updateNewAdmin=new HashMap<>();
                 updateNewAdmin.put("IsAdmin","2");
-                updateNewAdmin.put("AssignedHallId",hallIdAssign);
+                updateNewAdmin.put("AssignedHallName",hallNameAssign);
                 updateNewAdmin.put("AssignedHallType",hallTypeAssign);
                 assignedAdminRef.update(updateNewAdmin).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -342,13 +459,14 @@ public class Halls extends Base {
                                 createHall.put("HallName",hallNameId);
                                 createHall.put("HallId",hallId);
                                 createHall.put("HallAdmin","Empty");
+                                createHall.put("HallAdminId","Empty");
                                 createHall.put("IsHallAdminAssigned","No");
                                 createHall.put("TotalFloorInHall",0);
                                 createHall.put("TotalRoomInHall",0);
                                 createHall.put("TotalSeatInHall",0);
                                 createHall.put("TotalStuInHall",0);
                                 createHall.put("HallType",hallTypeCreateHallS.getSelectedItem().toString());
-                                createHall.put("HallAdminId","Empty");
+                                createHall.put("HallSubAdmins", Arrays.asList());
 
                                 docRef.set(createHall).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -379,7 +497,7 @@ public class Halls extends Base {
     }
 
     private class HallViewHolder extends RecyclerView.ViewHolder {
-        TextView hallNameHallList, hallAdminHallList;
+        TextView hallNameHallList, hallAdminHallList, seatsHallList;
         ImageView hallOptionHallList;
         CardView hallCard;
         View view;
@@ -388,6 +506,7 @@ public class Halls extends Base {
             super(itemView);
             hallNameHallList=itemView.findViewById(R.id.hallNameHallList);
             hallAdminHallList=itemView.findViewById(R.id.hallAdminHallList);
+            seatsHallList=itemView.findViewById(R.id.seatsHallList);
             hallOptionHallList=itemView.findViewById(R.id.hallOptionHallList);
             hallCard=itemView.findViewById(R.id.hallCard);
             view=itemView;

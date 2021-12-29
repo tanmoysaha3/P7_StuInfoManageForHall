@@ -43,7 +43,7 @@ public class SeatAssign extends Base {
 
     LayoutInflater inflater;
 
-    String adminAssignedHallId, stuIdSearch, adminAssignedHallType;
+    String adminAssignedHallId, stuIdSearch, adminAssignedHallType, adminAssignedHallName;
 
     TextView filterTextSeatAssign;
     Spinner floorNoSeatAssignS, roomNoSeatAssignS, seatNoSeatAssignS;
@@ -67,6 +67,9 @@ public class SeatAssign extends Base {
         navView.getMenu().clear();
         navView.inflateMenu(R.menu.nav_menu_hall);
 
+        PowerPreference.init(this);
+
+        adminAssignedHallName = PowerPreference.getDefaultFile().getString("AdminAssignedHallName");
         adminAssignedHallId = PowerPreference.getDefaultFile().getString("AdminAssignedHallId");
         adminAssignedHallType = PowerPreference.getDefaultFile().getString("AdminAssignedHallType");
 
@@ -321,6 +324,7 @@ public class SeatAssign extends Base {
         Map<String,Object> stu=new HashMap<>();
         stu.put("IsAssigned","1");
         stu.put("UniqueSeatId",uniqueSeatId);
+        stu.put("HallName",adminAssignedHallName);
         stu.put("HallId",adminAssignedHallId);
         stu.put("FloorNo",selectedFloor);
         stu.put("RoomNo",selectedRoom);
@@ -356,7 +360,7 @@ public class SeatAssign extends Base {
             }
         });
 
-        DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
+        /*DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
         Map<String,Object> uniqueSeat=new HashMap<>();
         uniqueSeat.put("IsAssigned","1");
         uniqueSeat.put("AssignedStuId",stuIdSearch);
@@ -370,7 +374,7 @@ public class SeatAssign extends Base {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(SeatAssign.this, "Error in updating uniqueSeat", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }

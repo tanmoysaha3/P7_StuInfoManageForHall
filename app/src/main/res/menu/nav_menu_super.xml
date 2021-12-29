@@ -8,9 +8,9 @@
         android:id="@+id/hallManageNavMSA"
         android:title="Hall Management" >
         <menu >
-            <item
+            <!--<item
                 android:id="@+id/hallStatNavMSA"
-                android:title="Hall Statistics" />
+                android:title="Hall Statistics" />-->
             <item
                 android:id="@+id/createHallNavMSA"
                 android:title="Halls" />

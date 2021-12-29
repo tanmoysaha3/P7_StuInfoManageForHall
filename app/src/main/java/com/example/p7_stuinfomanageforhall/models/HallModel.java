@@ -1,5 +1,8 @@
 package com.example.p7_stuinfomanageforhall.models;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class HallModel {
 
     private String HallName;
@@ -11,6 +14,7 @@ public class HallModel {
     private Long TotalSeatInHall;
     private Long TotalStuInHall;
     private String HallType;
+    private List<String> HallSubAdmins;
 
     public HallModel(){
 
@@ -18,7 +22,7 @@ public class HallModel {
 
     public HallModel(String hallName, String hallId, String hallAdmin, String hallAdminId, Long totalFloorInHall,
                      Long totalRoomInHall, Long totalSeatInHall, Long totalStuInHall,
-                     String hallType){
+                     String hallType, List<String> hallSubAdmins){
         this.HallName=hallName;
         this.HallId=hallId;
         this.HallAdmin=hallAdmin;
@@ -28,6 +32,7 @@ public class HallModel {
         this.TotalStuInHall=totalStuInHall;
         this.HallType=hallType;
         this.HallAdminId=hallAdminId;
+        this.HallSubAdmins=hallSubAdmins;
     }
 
     public String getHallName() {
@@ -100,5 +105,13 @@ public class HallModel {
 
     public void setHallType(String hallType) {
         HallType = hallType;
+    }
+
+    public List<String> getHallSubAdmins() {
+        return HallSubAdmins;
+    }
+
+    public void setHallSubAdmins(List<String> hallSubAdmins) {
+        HallSubAdmins = hallSubAdmins;
     }
 }

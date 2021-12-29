@@ -68,11 +68,11 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
         drawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()){
             case R.id.dashboardNavMSA:
-                //startActivity(new Intent(getApplicationContext(),DashBoardSuperAdmin.class));
+                startActivity(new Intent(getApplicationContext(),DashBoardSuperAdmin.class));
                 break;
-            case R.id.hallStatNavMSA:
+            /*case R.id.hallStatNavMSA:
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                break;
+                break;*/
             case R.id.createHallNavMSA:
                 startActivity(new Intent(getApplicationContext(),Halls.class));
                 break;

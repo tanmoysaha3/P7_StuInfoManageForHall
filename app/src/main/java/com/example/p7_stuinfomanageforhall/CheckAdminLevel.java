@@ -55,23 +55,28 @@ public class CheckAdminLevel extends AppCompatActivity {
                     if (documentSnapshot.exists()){
                         Toast.makeText(CheckAdminLevel.this, "Exists", Toast.LENGTH_SHORT).show();
                         x=documentSnapshot.getString("IsAdmin");
-                        String y=documentSnapshot.getString("AssignedHallId");
-                        PowerPreference.getDefaultFile().putString("AdminAssignedHallId",y);
-                        String z=documentSnapshot.getString("AssignedHallType");
-                        PowerPreference.getDefaultFile().putString("AdminAssignedHallType",z);
+                        PowerPreference.getDefaultFile().putString("IsEmailVerified","1");
                         //Toast.makeText(CheckAdminLevel.this, "source "+documentSnapshot.getMetadata().isFromCache(), Toast.LENGTH_SHORT).show();
                         if(x.equals("1")) {
                             startActivity(new Intent(getApplicationContext(), DashBoardSuperAdmin.class));
                         }
                         else if(x.equals("0")){
                             Toast.makeText(CheckAdminLevel.this, "You are not admin", Toast.LENGTH_SHORT).show();
-
                             //startActivity(new Intent(getApplicationContext(), AdminProfile.class));
                         }
                         else if(x.equals("2")){
+                            String y=documentSnapshot.getString("AssignedHallName");
+                            String a=y.substring(Math.max(0,y.length()-2),Math.max(0,y.length()-1));
+                            PowerPreference.getDefaultFile().putString("AdminAssignedHallName",y);
+                            PowerPreference.getDefaultFile().putString("AdminAssignedHallId",a);
+                            String z=documentSnapshot.getString("AssignedHallType");
+                            PowerPreference.getDefaultFile().putString("AdminAssignedHallType",z);
                             startActivity(new Intent(getApplicationContext(), DashBoardHallAdmin.class));
                         }
                         else if(x.equals("3")){
+                            //startActivity(new Intent(getApplicationContext(), SubAdmin.class));
+                        }
+                        else if(x.equals("4")){
                             //startActivity(new Intent(getApplicationContext(), Official.class));
                         }
                         finish();

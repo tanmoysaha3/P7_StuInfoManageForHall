@@ -67,8 +67,9 @@ public class CheckUser extends AppCompatActivity {
                                 //else if(emailDomain.equals("just.edu.bd")) {
                                 else if(emailDomain.equals("yousmail.com")) {
                                     Log.d(TAG,"online & admin verified");
-                                    startActivity(new Intent(getApplicationContext(),CheckAdminLevel.class));
-                                    finish();
+                                    Intent intent=new Intent(getApplicationContext(),CheckAdminLevel.class);
+                                    intent.putExtra("Email",email);
+                                    startActivity(intent);
                                 }
                             }
                             else {

@@ -1,5 +1,6 @@
 package com.example.p7_stuinfomanageforhall;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.paging.PagedList;
@@ -28,9 +31,12 @@ import com.firebase.ui.firestore.SnapshotParser;
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
 import com.firebase.ui.firestore.paging.FirestorePagingOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.preference.PowerPreference;
 
@@ -265,9 +271,9 @@ public class FilterStuList extends Base {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(FilterStuList.this, "See Student Profile", Toast.LENGTH_SHORT).show();
+                        seeStuDetailsDialog(model.getStudentId());
                     }
                 });
-                
             }
 
             @NonNull
@@ -281,6 +287,71 @@ public class FilterStuList extends Base {
         filterStuListRecV.setHasFixedSize(true);
         filterStuListRecV.setLayoutManager(new LinearLayoutManager(this));
         filterStuListRecV.setAdapter(stuAdapter);
+    }
+
+    private void seeStuDetailsDialog(String studentId) {
+        Dialog dialog=new Dialog(FilterStuList.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_see_stu_details);
+
+        TextView nameSeeStuDetails, stuIdSeeStuDetails, emailSeeStuDetails, contactSeeStuDetails,
+                distSeeStuDetails, dOBSeeStuDetails, deptSeeStuDetails, aYSeeStuDetails,
+                assignStatusSeeStuDetails, hallNameSeeStuDetails, floorNoSeeStuDetails, roomNoSeeStuDetails,
+                seatNoSeeStuDetails;
+        ImageView closeSeeStuDetailsIV;
+
+        nameSeeStuDetails=dialog.findViewById(R.id.nameSeeStuDetails);
+        stuIdSeeStuDetails=dialog.findViewById(R.id.stuIdSeeStuDetails);
+        emailSeeStuDetails=dialog.findViewById(R.id.emailSeeStuDetails);
+        contactSeeStuDetails=dialog.findViewById(R.id.contactSeeStuDetails);
+        distSeeStuDetails=dialog.findViewById(R.id.distSeeStuDetails);
+        dOBSeeStuDetails=dialog.findViewById(R.id.dOBSeeStuDetails);
+        deptSeeStuDetails=dialog.findViewById(R.id.deptSeeStuDetails);
+        aYSeeStuDetails=dialog.findViewById(R.id.aYSeeStuDetails);
+        assignStatusSeeStuDetails=dialog.findViewById(R.id.assignStatusSeeStuDetails);
+        hallNameSeeStuDetails=dialog.findViewById(R.id.hallNameSeeStuDetails);
+        floorNoSeeStuDetails=dialog.findViewById(R.id.floorNoSeeStuDetails);
+        roomNoSeeStuDetails=dialog.findViewById(R.id.roomNoSeeStuDetails);
+        seatNoSeeStuDetails=dialog.findViewById(R.id.seatNoSeeStuDetails);
+        closeSeeStuDetailsIV=dialog.findViewById(R.id.closeSeeStuDetailsIV);
+
+        DocumentReference stuDoc=fStore.collection("Verified Students").document(studentId);
+        stuDoc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                nameSeeStuDetails.setText(documentSnapshot.getString("Name"));
+                stuIdSeeStuDetails.setText(documentSnapshot.getString("StudentId"));
+                emailSeeStuDetails.setText(documentSnapshot.getString("Email"));
+                contactSeeStuDetails.setText(documentSnapshot.getString("ContactNo"));
+                distSeeStuDetails.setText(documentSnapshot.getString("District"));
+                dOBSeeStuDetails.setText(documentSnapshot.getString("DateOfBirth"));
+                deptSeeStuDetails.setText(documentSnapshot.getString("Department"));
+                aYSeeStuDetails.setText(documentSnapshot.getString("AcademicYear"));
+                if (documentSnapshot.getString("IsAssigned").equals("0")){
+                    assignStatusSeeStuDetails.setText("Not Assigned");
+                    hallNameSeeStuDetails.setText("Not Assigned");
+                    floorNoSeeStuDetails.setText("Not Assigned");
+                    roomNoSeeStuDetails.setText("Not Assigned");
+                    seatNoSeeStuDetails.setText("Not Assigned");
+                }
+                else if (documentSnapshot.getString("IsAssigned").equals("1")){
+                    assignStatusSeeStuDetails.setText("Assigned");
+                    hallNameSeeStuDetails.setText(documentSnapshot.getString("HallName"));
+                    floorNoSeeStuDetails.setText(documentSnapshot.getString("FloorNo"));
+                    roomNoSeeStuDetails.setText(documentSnapshot.getString("RoomNo"));
+                    seatNoSeeStuDetails.setText(documentSnapshot.getString("SeatNo"));
+                }
+            }
+        });
+
+        closeSeeStuDetailsIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void populateAOrNS() {

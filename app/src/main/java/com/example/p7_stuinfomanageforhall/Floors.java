@@ -290,11 +290,11 @@ public class Floors extends Base {
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent=new Intent(getApplicationContext(),Rooms.class);
+                        Intent intent=new Intent(getApplicationContext(),Rooms.class);
                         intent.putExtra("HallId",hallIdNewFloor);
                         intent.putExtra("HallName", selectedHall);
                         intent.putExtra("FloorNo",model.getFloorNo());
-                        startActivity(intent);*/
+                        startActivity(intent);
                     }
                 });
             }
