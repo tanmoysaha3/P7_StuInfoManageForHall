@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "412156634356",
+    "project_id": "p7-stuinfomanageforhall",
+    "storage_bucket": "p7-stuinfomanageforhall.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412156634356:android:bec3e911479f620f936aa1",
+        "android_client_info": {
+          "package_name": "com.example.p7_stuinfomanageforhall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "412156634356-okllnl2o4op3repcfq27ddgk53qqi9le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBx6uXXL1EDtinwExlN3OS6xGhEC1fgg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "412156634356-okllnl2o4op3repcfq27ddgk53qqi9le.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
