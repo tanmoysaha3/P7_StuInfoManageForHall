@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -224,6 +225,13 @@ public class Seats extends Base {
                 holder.seatNoSeatList.setText(model.getSeatNo());
                 holder.stuIdSeatList.setText(model.getAssignedStuId());
                 holder.stuNameSeatList.setText(model.getAssignedStuName());
+
+                holder.removeStuSeatListIV.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(Seats.this, "", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @NonNull
@@ -366,7 +374,7 @@ public class Seats extends Base {
                         }
                     });
 
-                    /*String uniqueSeatId=adminAssignedHallId+floorNoNewSeat+roomNoNewSeat+x;
+                    //String uniqueSeatId=adminAssignedHallId+floorNoNewSeat+roomNoNewSeat+x;
                     DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
                     Map<String,Object> uniqueSeat=new HashMap<>();
                     uniqueSeat.put("HallId",adminAssignedHallId);
@@ -387,7 +395,7 @@ public class Seats extends Base {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(Seats.this, "Failed to create unique seat", Toast.LENGTH_SHORT).show();
                         }
-                    });*/
+                    });
                 }
                 DocumentReference roomRef=fStore.collection("Halls").document(adminAssignedHallId)
                         .collection("Floors").document(floorNoNewSeat).collection("Rooms")
@@ -402,6 +410,8 @@ public class Seats extends Base {
                 hallRef.update("TotalSeatInHall",FieldValue.increment(Integer.parseInt(totalNewSeat)));
 
                 Intent intent=new Intent(getApplicationContext(),Seats.class);
+                intent.putExtra("FloorNo",floorNoNewSeat);
+                intent.putExtra("RoomNo",roomNoNewSeat);
 
                 dialog.dismiss();
                 finish();
@@ -415,6 +425,7 @@ public class Seats extends Base {
 
     private class SeatViewHolder extends RecyclerView.ViewHolder {
         TextView seatNoSeatList, stuIdSeatList, stuNameSeatList;
+        ImageView removeStuSeatListIV;
         CardView seatCard;
         View view;
 
@@ -423,6 +434,7 @@ public class Seats extends Base {
             seatNoSeatList=itemView.findViewById(R.id.seatNoSeatList);
             stuIdSeatList=itemView.findViewById(R.id.stuIdSeatList);
             stuNameSeatList=itemView.findViewById(R.id.stuNameSeatList);
+            removeStuSeatListIV=itemView.findViewById(R.id.removeStuSeatListIV);
             seatCard=itemView.findViewById(R.id.seatCard);
             view=itemView;
         }

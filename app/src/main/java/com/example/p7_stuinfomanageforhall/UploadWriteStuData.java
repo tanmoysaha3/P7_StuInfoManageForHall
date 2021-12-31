@@ -103,6 +103,7 @@ public class UploadWriteStuData extends Base {
         fStorage=FirebaseStorage.getInstance();
 
         stuFilesRecView=findViewById(R.id.stuFilesRecView);
+        createNewB.setVisibility(View.INVISIBLE);
 
         selectFileIB.setOnClickListener(new View.OnClickListener() {
             @Override

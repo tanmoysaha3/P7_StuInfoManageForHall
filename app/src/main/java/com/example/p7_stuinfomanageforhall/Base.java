@@ -109,6 +109,9 @@ public class Base extends AppCompatActivity implements NavigationView.OnNavigati
             case R.id.filterStuNavMHA:
                 startActivity(new Intent(getApplicationContext(),FilterStuList.class));
                 break;
+            case R.id.searchStuNavMHA:
+                startActivity(new Intent(getApplicationContext(),StuSearch.class));
+                break;
         }
         return false;
     }

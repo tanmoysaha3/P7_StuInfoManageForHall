@@ -68,6 +68,10 @@ public class FilterStuList extends Base {
         View contentView=inflater.inflate(R.layout.activity_filter_stu_list,null,false);
         drawerLayout.addView(contentView,0);
 
+        navView.getMenu().clear();
+        navView.inflateMenu(R.menu.nav_menu_hall);
+        createNewB.setVisibility(View.INVISIBLE);
+
         filterStuListCard=findViewById(R.id.filterStuListCard);
         assignedOrNotFilterStuListS=findViewById(R.id.assignedOrNotFilterStuListS);
         distFilterStuListS=findViewById(R.id.distFilterStuListS);

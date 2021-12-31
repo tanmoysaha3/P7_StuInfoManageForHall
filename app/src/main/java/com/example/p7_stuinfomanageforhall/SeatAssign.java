@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -55,6 +56,7 @@ public class SeatAssign extends Base {
 
     String emptyFloor, emptyRoom, emptySeat, selectedFloor, selectedRoom,
             selectedSeat, stuStatus, uniqueSeatId;
+    String stuName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,6 +269,7 @@ public class SeatAssign extends Base {
 
     private void showStuDetails() {
         String stuId=stuIdSeatAssign.getText().toString();
+
         if (stuId.length()==6){
             stuIdSearch=stuId;
             DocumentReference stuDoc=fStore.collection("Verified Students").document(stuIdSearch);
@@ -288,6 +291,7 @@ public class SeatAssign extends Base {
                                     warningSeatAssign.setText(null);
                                 }
                                 showNameSeatAssign.setText(stuSnap.getString("Name"));
+                                stuName=stuSnap.getString("Name");
                                 showIdSeatAssign.setText(stuSnap.getString("StudentId"));
                                 showAYSeatAssign.setText(stuSnap.getString("AcademicYear"));
                                 showDistSeatAssign.setText(stuSnap.getString("District"));
@@ -348,6 +352,7 @@ public class SeatAssign extends Base {
         Map<String,Object> seat=new HashMap<>();
         seat.put("IsAssigned","1");
         seat.put("AssignedStuId",stuIdSearch);
+        seat.put("AssignedStuName",stuName);
         seatRef.update(seat).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -360,7 +365,7 @@ public class SeatAssign extends Base {
             }
         });
 
-        /*DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
+        DocumentReference uniqueSeatRef=fStore.collection("Created Seats").document(uniqueSeatId);
         Map<String,Object> uniqueSeat=new HashMap<>();
         uniqueSeat.put("IsAssigned","1");
         uniqueSeat.put("AssignedStuId",stuIdSearch);
@@ -374,9 +379,19 @@ public class SeatAssign extends Base {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(SeatAssign.this, "Error in updating uniqueSeat", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
+        DocumentReference roomRef=fStore.collection("Halls").document(adminAssignedHallId)
+                .collection("Floors").document(selectedFloor).collection("Rooms")
+                .document(selectedRoom);
+        roomRef.update("TotalStuInRoom", FieldValue.increment(1));
 
+        DocumentReference floorRef=fStore.collection("Halls").document(adminAssignedHallId)
+                .collection("Floors").document(selectedFloor);
+        floorRef.update("TotalStuInFloor",FieldValue.increment(1));
+
+        DocumentReference hallRef=fStore.collection("Halls").document(adminAssignedHallId);
+        hallRef.update("TotalStuInHall",FieldValue.increment(1));
     }
 
     private void removeAlert() {

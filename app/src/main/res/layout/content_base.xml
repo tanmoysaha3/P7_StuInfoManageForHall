@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_margin="4sp"
-            android:backgroundTint="@color/darkThemeDarkYellow"
+            android:backgroundTint="#7CB342"
             android:text="Create"
             android:textColor="#000000"
             tools:layout_editor_absoluteX="323dp"

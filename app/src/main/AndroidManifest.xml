@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.P7_StuInfoManageForHall.NoActionBar">
-        <activity android:name=".Notices"></activity>
+        <activity android:name=".UpdateHallAdmin"></activity>
+        <activity android:name=".StuSearch" />
+        <activity android:name=".Notices" />
         <activity android:name=".ColorFilter" />
         <activity android:name=".StuLogin" />
         <activity android:name=".DashBoardStudent" />
